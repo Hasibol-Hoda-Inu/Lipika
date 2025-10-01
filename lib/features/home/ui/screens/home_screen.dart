@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lipika/application/assets_path.dart';
+import 'package:lipika/features/common/ui/widgets/book_search_anchor.dart';
 
 import '../../../../application/app_colors.dart';
 import '../widgets/book_container.dart';
@@ -37,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              BookSearchAnchor(),
+              SizedBox(height: 30,),
               SectionTitle(title: 'Explore by categories',),
               SizedBox(height: 12,),
               SingleChildScrollView(
