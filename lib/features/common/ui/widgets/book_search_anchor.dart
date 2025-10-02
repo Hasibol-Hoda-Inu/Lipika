@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../application/app_colors.dart';
 
 class BookSearchAnchor extends StatefulWidget {
   const BookSearchAnchor({super.key});
@@ -22,11 +21,7 @@ class _BookSearchAnchorState extends State<BookSearchAnchor> {
     return SearchAnchor(
       builder: (context, SearchController controller) {
         return SearchBar(
-          // ... (your existing SearchBar code is fine)
           controller: controller,
-          padding: const WidgetStatePropertyAll(
-            EdgeInsets.symmetric(horizontal: 16.0),
-          ),
           onTap: () {
             controller.openView();
           },
@@ -35,14 +30,6 @@ class _BookSearchAnchorState extends State<BookSearchAnchor> {
           },
           leading: const Icon(Icons.search),
           hintText: 'Search any books',
-          elevation: WidgetStateProperty.all<double>(0.0),
-          backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
-          shape: WidgetStateProperty.all<OutlinedBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
-              side: BorderSide(color: AppColors.borderColor),
-            ),
-          ),
         );
       },
       suggestionsBuilder: (context, SearchController controller) {

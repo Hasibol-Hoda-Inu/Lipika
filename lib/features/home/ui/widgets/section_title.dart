@@ -10,14 +10,17 @@ class SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontSize: 24,
-          ),),
-          Text("See All", style: Theme.of(context).textTheme.bodyMedium),
-        ]
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontSize: 24,
+            ),),
+            Text("See All", style: Theme.of(context).textTheme.bodyMedium),
+          ]
+      ),
     );
   }
 }

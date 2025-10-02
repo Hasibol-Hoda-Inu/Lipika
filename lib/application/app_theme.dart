@@ -50,6 +50,30 @@ class AppThemeData{
           color: AppColors.bodyTextColor,
         ),
       ),
+
+      searchBarTheme: SearchBarThemeData(
+        elevation: WidgetStateProperty.all<double>(0.0),
+        backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+        shape: WidgetStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+            side: BorderSide(color: AppColors.borderColor),
+          ),
+        ),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.symmetric(horizontal: 16.0),
+        ),
+        hintStyle: WidgetStateProperty.all<TextStyle>(
+          const TextStyle(color: Colors.grey),
+        ),
+      ),
+
+      searchViewTheme: SearchViewThemeData(
+        dividerColor: Colors.grey[400],
+        headerTextStyle: const TextStyle(
+          color: Colors.black87,
+        ),
+      ),
     );
   }
 

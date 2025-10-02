@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lipika/application/appProviders.dart';
 
 import 'application/app.dart';
 
 void main(){
-  runApp(Lipika());
+  runApp(
+      AppProviders(
+          child: Lipika()
+      )
+  );
 }
