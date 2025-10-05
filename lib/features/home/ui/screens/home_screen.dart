@@ -5,6 +5,7 @@ import 'package:lipika/features/common/ui/widgets/book_search_anchor.dart';
 import 'package:lipika/features/home/ui/widgets/carousel_slider.dart';
 
 import '../../../../application/app_colors.dart';
+import '../../../category/ui/screens/categories_screen.dart';
 import '../widgets/book_container.dart';
 import '../widgets/category_container.dart';
 import '../widgets/section_title.dart';
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   itemCount: 6,
                   itemBuilder: (context, index) {
-                    return CategoryContainer();
+                    return CategoryContainer(onTapCategoryScreen: onTapCategoryScreen,);
                   },
                   separatorBuilder: (context, index) {
                     return const SizedBox(width: 12);
@@ -120,6 +121,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void onTapCategoryScreen(){
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> CategoriesScreen()));
   }
 }
 

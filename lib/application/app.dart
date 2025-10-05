@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lipika/features/common/ui/screens/main_bottom_nav_screen.dart';
-import 'package:lipika/features/home/ui/screens/home_screen.dart';
 
 import 'app_theme.dart';
 

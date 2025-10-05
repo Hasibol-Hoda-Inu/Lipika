@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lipika/application/appProviders.dart';
+import 'package:lipika/application/app_providers.dart';
 
 import 'application/app.dart';
 

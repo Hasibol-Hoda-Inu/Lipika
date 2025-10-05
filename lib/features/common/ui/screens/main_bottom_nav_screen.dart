@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lipika/application/app_colors.dart';
+import 'package:lipika/features/my_books/ui/screen/my_books.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../application/assets_path.dart';
@@ -17,20 +18,11 @@ class MainBottomNavScreen extends StatefulWidget {
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   final List<Widget> _screens = const [
     HomeScreen(),
-    HomeScreen(),
+    MyBooks(),
     HomeScreen(),
     HomeScreen(),
   ];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Get.find<SliderListController>().getBannerSliders();
-  //   Get.find<CategoryListController>().getCategoryList();
-  //   Get.find<ProductListByPopularController>().getPopularProductList();
-  //   Get.find<ProductListBySpecialController>().getSpecialProductList();
-  //   Get.find<ProductListByNewController>().getNewProductList();
-  // }
   @override
   Widget build(BuildContext context) {
     return Consumer<MainBottomNavProvider>(
@@ -69,7 +61,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                     ),
                   ),
                   activeIcon: SvgPicture.asset(
-                    AssetsPath.books,
+                    AssetsPath.myBooksActive,
                     width: 20, height: 20,
                     colorFilter: ColorFilter.mode(
                       AppColors.themeColor,

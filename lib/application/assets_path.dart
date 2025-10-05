@@ -9,6 +9,8 @@ class AssetsPath{
 
   static const String home = "$_base/home.svg";
   static const String books = "$_base/book.svg";
+  static const String myBooksActive = "$_base/mybooks-active.svg";
+
   static const String library = "$_base/library.svg";
   static const String profile = "$_base/profile.svg";
 }
