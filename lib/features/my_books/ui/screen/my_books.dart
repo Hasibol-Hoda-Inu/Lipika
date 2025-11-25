@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../application/app_colors.dart';
-import '../../../common/ui/screens/upload_book_screen.dart';
+import 'upload_book_screen.dart';
 
 class MyBooks extends StatefulWidget {
   const MyBooks({super.key});
