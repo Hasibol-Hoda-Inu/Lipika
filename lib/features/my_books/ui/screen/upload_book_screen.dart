@@ -14,19 +14,38 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Upload Book"), centerTitle: true),
+      appBar: AppBar(
+        title: const Text("Upload Book"),
+        centerTitle: true,
+        actions: [
+          SizedBox(
+            width: 90,
+            child: ElevatedButton.icon(
+                onPressed: (){},
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+              ),
+                icon: const Icon(Icons.edit),
+                label: const Text("Add"),
+            ),
+          ),
+          const SizedBox(width: 12,),
+        ],
+        elevation: 4,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 12,),
               SizedBox(
                 width: double.infinity,
                 height: 340,
                 child: Image.asset(AssetsPath.book),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               RichText(
                   text: TextSpan(
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -56,7 +75,7 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
               )),
               const SizedBox(height: 20),
               const SizedBox(height: 20),
-              ChooseOptions(),
+              const ChooseOptions(),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -64,7 +83,7 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
                   child: Text("Continue"),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
           ),
         ),

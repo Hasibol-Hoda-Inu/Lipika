@@ -15,7 +15,13 @@ class _ChooseOptionsState extends State<ChooseOptions> {
 
   bool? isSelected;
   int? selectedIndex;
-
+  List<String> options = [
+    "Add to my Library",
+    "Sell it",
+    "Swap it",
+    "Give it away",
+    "Give it away",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +38,9 @@ class _ChooseOptionsState extends State<ChooseOptions> {
         SizedBox(
           height: 160,
           child: GridView.builder(
-            itemCount: 5,
+            itemCount: 4,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               childAspectRatio: 2,
               crossAxisCount: 3,
               crossAxisSpacing: 10,
@@ -54,8 +60,11 @@ class _ChooseOptionsState extends State<ChooseOptions> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
-                    child: Text("Sell it", style: TextStyle(
+                    child: Text(options[index],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
                       color: isSelected! ? Colors.white : AppColors.themeColor,
+                      fontWeight: FontWeight.bold,
                     ),
                     ),
                   ),

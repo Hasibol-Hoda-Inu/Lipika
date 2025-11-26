@@ -1,6 +1,6 @@
 # Lipika
 
-A community of 2nd hand book buy & sell
+## A community of 2nd hand book buy & sell
 
 - State management: Provider
 - Architecture: Feature-First Clean Architecture
