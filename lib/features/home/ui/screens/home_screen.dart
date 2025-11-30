@@ -38,19 +38,19 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CarouselSliderWidget(),
-            SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const CarouselSliderWidget(),
+            const SizedBox(height: 20,),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: BookSearchAnchor(),
             ),
-            SizedBox(height: 30,),
-            SectionTitle(title: 'Explore by categories',),
-            SizedBox(height: 12,),
+            const SizedBox(height: 30,),
+            const SectionTitle(title: 'Explore by categories',),
+            const SizedBox(height: 12,),
             SizedBox(
                 height: 140,
                 child: ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   scrollDirection: Axis.horizontal,
                   itemCount: 6,
                   itemBuilder: (context, index) {
@@ -61,17 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-            SizedBox(height: 30,),
-            SectionTitle(title: "Books for you",),
-            SizedBox(height: 12,),
+            const SizedBox(height: 30,),
+            const SectionTitle(title: "Books for you",),
+            const SizedBox(height: 12,),
             SizedBox(
               height: 290,
               child: ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 scrollDirection: Axis.horizontal,
                 itemCount: 6,
                 itemBuilder: (context, index) {
-                  return BookContainer();
+                  return const BookContainer();
                 },
                 separatorBuilder: (context, index) {
                   return const SizedBox(width: 12);

@@ -15,7 +15,7 @@ class _MyBooksState extends State<MyBooks> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Books"),
+        title: const Text("My Books"),
         centerTitle: true,
       ),
       body: Padding(
