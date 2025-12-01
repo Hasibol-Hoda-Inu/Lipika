@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../application/routes/app_route_const.dart';
+import 'cart.dart';
 
 class BookDetails extends StatefulWidget {
   const BookDetails({super.key});
@@ -14,6 +18,12 @@ class _BookDetailsState extends State<BookDetails> {
       appBar: AppBar(
         title: const Text("Book Details"),
         centerTitle: true,
+        actions: [
+          IconButton.filledTonal(
+              onPressed: onTapCartScreen,
+              icon: const Icon(Icons.shopping_cart_outlined)
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -39,5 +49,8 @@ class _BookDetailsState extends State<BookDetails> {
         ),
       ),
     );
+  }
+  void onTapCartScreen(){
+    GoRouter.of(context).pushNamed(AppRouteConst.cartRouteName);
   }
 }

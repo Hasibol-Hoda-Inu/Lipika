@@ -78,39 +78,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
-            SizedBox(height: 30,),
-            Divider(
+            const SizedBox(height: 30,),
+            const Divider(
               color: AppColors.borderColor,
               thickness: 8,
             ),
-            SizedBox(height: 30,),
-            SectionTitle(title: "Most popular books",),
-            SizedBox(height: 12,),
+            const SizedBox(height: 30,),
+            const SectionTitle(title: "Most popular books",),
+            const SizedBox(height: 12,),
             SizedBox(
               height: 290,
               child: ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 scrollDirection: Axis.horizontal,
                 itemCount: 6,
                 itemBuilder: (context, index) {
-                  return BookContainer();
+                  return const BookContainer();
                 },
                 separatorBuilder: (context, index) {
                   return const SizedBox(width: 12);
                 },
               ),
             ),
-            SizedBox(height: 30,),
-            SectionTitle(title: "New books in library",),
-            SizedBox(height: 12,),
+            const SizedBox(height: 30,),
+            const SectionTitle(title: "New books in library",),
+            const SizedBox(height: 12,),
             SizedBox(
               height: 290,
               child: ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 scrollDirection: Axis.horizontal,
                 itemCount: 6,
                 itemBuilder: (context, index) {
-                  return BookContainer();
+                  return const BookContainer();
                 },
                 separatorBuilder: (context, index) {
                   return const SizedBox(width: 12);
@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void onTapCategoryScreen(){
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> CategoriesScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> const CategoriesScreen()));
   }
 }
 

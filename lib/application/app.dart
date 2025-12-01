@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lipika/features/common/ui/screens/main_bottom_nav_screen.dart';
+import 'package:lipika/application/routes/app_route_config.dart';
 
 import 'app_theme.dart';
 
@@ -8,12 +8,18 @@ class Lipika extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+
+      routeInformationParser: appRouter.routeInformationParser,
+      routerDelegate: appRouter.routerDelegate,
+      routeInformationProvider: appRouter.routeInformationProvider,
+
       theme: AppThemeData.lightThemeData,
       darkTheme: AppThemeData.darkThemeData,
       themeMode: ThemeMode.light,
-      home: MainBottomNavScreen(),
+
+      // home: const MainBottomNavScreen(),
     );
   }
 }

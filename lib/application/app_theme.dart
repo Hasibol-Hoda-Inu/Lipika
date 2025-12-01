@@ -6,40 +6,44 @@ class AppThemeData{
   static ThemeData get lightThemeData{
     return ThemeData(
       colorSchemeSeed: AppColors.themeColor,
+
       inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppColors.borderColor),
+          borderSide: const BorderSide(color: AppColors.borderColor),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppColors.borderColor),
+          borderSide: const BorderSide(color: AppColors.borderColor),
         ),
       ),
+
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.themeColor,
           foregroundColor: Colors.white,
-          padding: EdgeInsets.symmetric(vertical: 18),
-          textStyle: TextStyle(
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          textStyle: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600
           )
         ),
       ),
+
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.themeColor,
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
         ),
       ),
       ),
-      textTheme: TextTheme(
+
+      textTheme: const TextTheme(
         titleLarge: TextStyle(
           fontSize: 28,
           fontWeight: FontWeight.w600,
@@ -57,7 +61,7 @@ class AppThemeData{
         shape: WidgetStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
-            side: BorderSide(color: AppColors.borderColor),
+            side: const BorderSide(color: AppColors.borderColor),
           ),
         ),
         padding: const WidgetStatePropertyAll(

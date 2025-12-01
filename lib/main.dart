@@ -5,7 +5,7 @@ import 'application/app.dart';
 
 void main(){
   runApp(
-      AppProviders(
+      const AppProviders(
           child: Lipika()
       )
   );
