@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lipika/application/app_colors.dart';
 import 'package:lipika/features/my_books/ui/screen/my_books.dart';
+import 'package:lipika/features/profile/ui/screens/profile.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../application/assets_path.dart';
@@ -20,7 +21,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     HomeScreen(),
     MyBooks(),
     HomeScreen(),
-    HomeScreen(),
+    Profile(),
   ];
 
   @override
@@ -36,7 +37,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                   icon: SvgPicture.asset(
                     AssetsPath.home,
                     width: 20, height: 20,
-                    colorFilter: ColorFilter.mode(
+                    colorFilter: const ColorFilter.mode(
                       Colors.grey,
                       BlendMode.srcIn,
                     ),
@@ -44,7 +45,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                   activeIcon: SvgPicture.asset(
                     AssetsPath.home,
                     width: 20, height: 20,
-                    colorFilter: ColorFilter.mode(
+                    colorFilter: const ColorFilter.mode(
                       AppColors.themeColor,
                       BlendMode.srcIn,
                     ),
@@ -55,7 +56,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                   icon: SvgPicture.asset(
                     AssetsPath.books,
                     width: 20, height: 20,
-                    colorFilter: ColorFilter.mode(
+                    colorFilter: const ColorFilter.mode(
                       Colors.grey,
                       BlendMode.srcIn,
                     ),
@@ -63,7 +64,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                   activeIcon: SvgPicture.asset(
                     AssetsPath.myBooksActive,
                     width: 20, height: 20,
-                    colorFilter: ColorFilter.mode(
+                    colorFilter: const ColorFilter.mode(
                       AppColors.themeColor,
                       BlendMode.srcIn,
                     ),
@@ -74,7 +75,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                   icon: SvgPicture.asset(
                     AssetsPath.library,
                     width: 20, height: 20,
-                    colorFilter: ColorFilter.mode(
+                    colorFilter: const ColorFilter.mode(
                       Colors.grey,
                       BlendMode.srcIn,
                     ),
@@ -82,7 +83,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                   activeIcon: SvgPicture.asset(
                     AssetsPath.library,
                     width: 20, height: 20,
-                    colorFilter: ColorFilter.mode(
+                    colorFilter: const ColorFilter.mode(
                       AppColors.themeColor,
                       BlendMode.srcIn,
                     ),
@@ -93,7 +94,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                   icon: SvgPicture.asset(
                     AssetsPath.profile,
                     width: 20, height: 20,
-                    colorFilter: ColorFilter.mode(
+                    colorFilter: const ColorFilter.mode(
                       Colors.grey,
                       BlendMode.srcIn,
                     ),
@@ -101,7 +102,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                   activeIcon: SvgPicture.asset(
                     AssetsPath.profile,
                     width: 20, height: 20,
-                    colorFilter: ColorFilter.mode(
+                    colorFilter: const ColorFilter.mode(
                       AppColors.themeColor,
                       BlendMode.srcIn,
                     ),

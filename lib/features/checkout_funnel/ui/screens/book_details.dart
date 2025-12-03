@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lipika/application/assets_path.dart';
 import 'package:lipika/features/checkout_funnel/ui/widgets/book_view_slider.dart';
 
 import '../../../../application/app_colors.dart';
 import '../../../../application/routes/app_route_const.dart';
 import '../widgets/book_info_section.dart';
 import '../widgets/review_card.dart';
-import 'cart.dart';
 
 class BookDetails extends StatefulWidget {
   const BookDetails({super.key});
