@@ -5,6 +5,7 @@ class AssetsPath{
   static const String natural = "$_base/natural.svg";
   static const String book = "$_base/book_cover.png";
   static const String banner = "$_base/banner.png";
+  static const String avatar = "$_base/avatar.png";
 
 
   static const String home = "$_base/home.svg";
