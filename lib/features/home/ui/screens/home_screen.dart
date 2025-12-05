@@ -30,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
               style: IconButton.styleFrom(
                 foregroundColor: Colors.grey,
               ),
-              icon: Icon(Icons.account_circle_rounded)),
-          SizedBox(width: 12,),
+              icon: const Icon(Icons.shopping_cart_outlined)),
+          const SizedBox(width: 12,),
         ],
       ),
       body: SingleChildScrollView(

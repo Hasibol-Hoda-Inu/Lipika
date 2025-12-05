@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lipika/features/checkout_funnel/ui/screens/checkout.dart';
 import 'package:lipika/features/checkout_funnel/ui/screens/order_confirmation.dart';
+import 'package:lipika/features/profile/ui/screens/personal_details.dart';
 import 'package:lipika/features/profile/ui/screens/profile.dart';
 
 import '../../features/checkout_funnel/ui/screens/cart.dart';
@@ -36,6 +37,11 @@ final GoRouter appRouter = GoRouter(
         name: AppRouteConst.orderConfirmRouteName,
         path: "/orderConfirm",
         pageBuilder: (context, state)=> const MaterialPage(child: OrderConfirmation()),
+      ),
+      GoRoute(
+        name: AppRouteConst.profileDetailsRouteName,
+        path: "/profileDetails",
+        pageBuilder: (context, state)=> const MaterialPage(child: PersonalDetails()),
       ),
     ]
   );

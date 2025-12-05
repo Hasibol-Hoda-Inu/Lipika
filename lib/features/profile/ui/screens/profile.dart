@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lipika/application/assets_path.dart';
 
 import '../../../../application/app_colors.dart';
+import '../../../../application/routes/app_route_const.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -60,6 +62,7 @@ class _ProfileState extends State<Profile> {
                 shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index)=> ListTile(
+                    onTap: onTapPDScreen,
                     leading: Icon(_icons.elementAt(index)),
                     title: Text(_titles[index]),
                     trailing: const Icon(Icons.arrow_forward_ios_rounded),
@@ -69,24 +72,13 @@ class _ProfileState extends State<Profile> {
                   ),
                   itemCount: 5,
               ),
-              // Text("General", style: Theme.of(context).textTheme.titleLarge,),
-              // ListView.separated(
-              //   shrinkWrap: true,
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   itemBuilder: (context, index)=> const ListTile(
-              //     leading: Icon(Icons.person),
-              //     title: Text("Personal Details"),
-              //     trailing: Icon(Icons.arrow_forward_ios_rounded),
-              //   ),
-              //   separatorBuilder: (context, index)=> const Divider(
-              //     color: AppColors.borderColor,
-              //   ),
-              //   itemCount: 3,
-              // ),
             ],
           ),
         ),
       ),
     );
+  }
+  void onTapPDScreen(){
+    GoRouter.of(context).pushNamed(AppRouteConst.profileDetailsRouteName);
   }
 }
