@@ -10,6 +10,19 @@ class ReturnPolicy extends StatefulWidget {
 class _ReturnPolicyState extends State<ReturnPolicy> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Return Policy'),
+        centerTitle: true,
+      ),
+      body: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            Text("Return & Exchange Policy")
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -6,4 +6,7 @@ class AppRouteConst {
   static const String orderConfirmRouteName = "orderConfirm";
 
   static const String profileDetailsRouteName = "profileDetails";
+  static const String accountSettingsRouteName = "accountSettings";
+  static const String privacyPolicyRouteName = "privacyPolicy";
+  static const String returnPolicyRouteName = "returnPolicy";
 }

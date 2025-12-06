@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lipika/features/checkout_funnel/ui/screens/checkout.dart';
 import 'package:lipika/features/checkout_funnel/ui/screens/order_confirmation.dart';
+import 'package:lipika/features/profile/ui/screens/account_settings.dart';
 import 'package:lipika/features/profile/ui/screens/personal_details.dart';
+import 'package:lipika/features/profile/ui/screens/privacy_policy.dart';
 import 'package:lipika/features/profile/ui/screens/profile.dart';
 
 import '../../features/checkout_funnel/ui/screens/cart.dart';
 import '../../features/common/ui/screens/main_bottom_nav_screen.dart';
+import '../../features/profile/ui/screens/return_policy.dart';
 import 'app_route_const.dart';
 
 
@@ -42,6 +45,21 @@ final GoRouter appRouter = GoRouter(
         name: AppRouteConst.profileDetailsRouteName,
         path: "/profileDetails",
         pageBuilder: (context, state)=> const MaterialPage(child: PersonalDetails()),
+      ),
+      GoRoute(
+        name: AppRouteConst.accountSettingsRouteName,
+        path: "/accountSettings",
+        pageBuilder: (context, state)=> const MaterialPage(child: AccountSettings()),
+      ),
+      GoRoute(
+        name: AppRouteConst.privacyPolicyRouteName,
+        path: "/privacyPolicy",
+        pageBuilder: (context, state)=> const MaterialPage(child: PrivacyPolicy()),
+      ),
+      GoRoute(
+        name: AppRouteConst.returnPolicyRouteName,
+        path: "/returnPolicy",
+        pageBuilder: (context, state)=> const MaterialPage(child: ReturnPolicy()),
       ),
     ]
   );

@@ -29,6 +29,20 @@ class _ProfileState extends State<Profile> {
     "Return & Exchange Policy",
   ];
 
+  late final List<VoidCallback> _methods;
+
+  @override
+  void initState() {
+    super.initState();
+    _methods = [
+      onTapPDScreen,
+      onTapAddressScreen,
+      onTapAccountSettingsScreen,
+      onTapPrivacyPolicyScreen,
+      onTapReturnExchangeScreen,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +76,7 @@ class _ProfileState extends State<Profile> {
                 shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index)=> ListTile(
-                    onTap: onTapPDScreen,
+                    onTap: _methods.elementAt(index),
                     leading: Icon(_icons.elementAt(index)),
                     title: Text(_titles[index]),
                     trailing: const Icon(Icons.arrow_forward_ios_rounded),
@@ -78,7 +92,20 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
+
   void onTapPDScreen(){
     GoRouter.of(context).pushNamed(AppRouteConst.profileDetailsRouteName);
+  }
+  void onTapAddressScreen(){
+    GoRouter.of(context).pushNamed(AppRouteConst.profileDetailsRouteName);
+  }
+  void onTapAccountSettingsScreen(){
+    GoRouter.of(context).pushNamed(AppRouteConst.accountSettingsRouteName);
+  }
+  void onTapPrivacyPolicyScreen(){
+    GoRouter.of(context).pushNamed(AppRouteConst.privacyPolicyRouteName);
+  }
+  void onTapReturnExchangeScreen(){
+    GoRouter.of(context).pushNamed(AppRouteConst.returnPolicyRouteName);
   }
 }
