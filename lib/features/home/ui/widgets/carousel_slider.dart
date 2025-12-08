@@ -32,8 +32,8 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
               builder: (BuildContext context) {
                 return Container(
                     width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: const BoxDecoration(
                       color: AppColors.borderColor,
                       image: DecorationImage(image: AssetImage(AssetsPath.banner), fit: BoxFit.cover),
                     ),

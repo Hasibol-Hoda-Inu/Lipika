@@ -35,11 +35,16 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     _methods = [
-      onTapPDScreen,
-      onTapAddressScreen,
-      onTapAccountSettingsScreen,
-      onTapPrivacyPolicyScreen,
-      onTapReturnExchangeScreen,
+      _onTapPDScreen
+,
+      _onTapAddressScreen
+,
+      _onTapAccountSettingsScreen
+,
+      _onTapPrivacyPolicyScreen
+,
+      _onTapReturnExchangeScreen
+,
     ];
   }
 
@@ -93,19 +98,24 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void onTapPDScreen(){
+  void _onTapPDScreen
+(){
     GoRouter.of(context).pushNamed(AppRouteConst.profileDetailsRouteName);
   }
-  void onTapAddressScreen(){
+  void _onTapAddressScreen
+(){
     GoRouter.of(context).pushNamed(AppRouteConst.profileDetailsRouteName);
   }
-  void onTapAccountSettingsScreen(){
+  void _onTapAccountSettingsScreen
+(){
     GoRouter.of(context).pushNamed(AppRouteConst.accountSettingsRouteName);
   }
-  void onTapPrivacyPolicyScreen(){
+  void _onTapPrivacyPolicyScreen
+(){
     GoRouter.of(context).pushNamed(AppRouteConst.privacyPolicyRouteName);
   }
-  void onTapReturnExchangeScreen(){
+  void _onTapReturnExchangeScreen
+(){
     GoRouter.of(context).pushNamed(AppRouteConst.returnPolicyRouteName);
   }
 }

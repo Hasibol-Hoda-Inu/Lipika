@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lipika/features/profile/ui/widgets/topic_selector.dart';
 
-import '../../../../application/app_colors.dart';
-
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
 
@@ -11,7 +9,6 @@ class PersonalDetails extends StatefulWidget {
 }
 
 class _PersonalDetailsState extends State<PersonalDetails> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,11 +20,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 20,
             children: [
-              const Center(
-                child: CircleAvatar(
-                  radius: 80,
-                ),
-              ),
+              const Center(child: CircleAvatar(radius: 80)),
               Form(
                 child: Column(
                   spacing: 12,
@@ -64,11 +57,11 @@ class _PersonalDetailsState extends State<PersonalDetails> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: (){},
+                  onPressed: () {},
                   child: const Text("Save"),
                 ),
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 10),
             ],
           ),
         ),

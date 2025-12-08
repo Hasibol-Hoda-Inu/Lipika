@@ -44,7 +44,7 @@ class _MyLibraryState extends State<MyLibrary> {
                     childAspectRatio: 0.72
                   ),
                   itemBuilder: (context, index)=> InkWell(
-                    onTap: onTapNextScreen,
+                    onTap: _onTapNextScreen,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -68,7 +68,7 @@ class _MyLibraryState extends State<MyLibrary> {
       ),
     );
   }
-  void onTapNextScreen(){
+  void _onTapNextScreen(){
     GoRouter.of(context).pushNamed(AppRouteConst.categoriesRouteName);
   }
 }

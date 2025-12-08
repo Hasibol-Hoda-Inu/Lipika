@@ -29,34 +29,34 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 32,),
+              const SizedBox(height: 32,),
               Text("Welcome back", style: Theme.of(context).textTheme.titleLarge,),
-              SizedBox(height: 6,),
-              Text("You can log into your account first to read many interesting books"),
-              SizedBox(height: 32,),
+              const SizedBox(height: 6,),
+              const Text("You can log into your account first to read many interesting books"),
+              const SizedBox(height: 32,),
               buildSignInForm(),
-              SizedBox(height: 40,),
+              const SizedBox(height: 40,),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: onCLickSignUpScreen,
                     style: ElevatedButton.styleFrom(),
-                    child: Text("Login"),
+                    child: const Text("Login"),
                 ),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Forgot your password? "),
+                  const Text("Forgot your password? "),
                   TextButton(
                     onPressed: (){},
-                    child: Text("Reset here"),
+                    child: const Text("Reset here"),
                   )
                 ],
               ),
-              SizedBox(height: 20,),
-              Row(
+              const SizedBox(height: 20,),
+              const Row(
                 children: [
                   Expanded(
                     child: Divider(
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ))
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
@@ -80,17 +80,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     foregroundColor: Colors.black,
                   ),
                   icon: SvgPicture.asset(AssetsPath.google, width: 28, height: 28,),
-                  label: Text("Login with Google"),
+                  label: const Text("Login with Google"),
                 ),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account? "),
+                  const Text("Don't have an account? "),
                   TextButton(
                     onPressed: (){},
-                    child: Text("Register here"),
+                    child: const Text("Register here"),
                   )
                 ],
               ),
@@ -116,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "youremail@mail.com",
                         labelText: "Email",
                       ),
@@ -131,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "input your password",
                         labelText: "Password",
                       ),
@@ -140,11 +140,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ));
   }
   void onCLickSignUpScreen(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
   }
   void onTapNextScreen(){
     if(_formKey.currentState!.validate()){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
     }
   }
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lipika/features/auth/ui/screens/splash_screen.dart';
 import 'package:lipika/features/category/ui/screens/categories_screen.dart';
 import 'package:lipika/features/checkout_funnel/ui/screens/checkout.dart';
 import 'package:lipika/features/checkout_funnel/ui/screens/order_confirmation.dart';
+import 'package:lipika/features/my_books/ui/screen/upload_book_screen.dart';
 import 'package:lipika/features/profile/ui/screens/account_settings.dart';
 import 'package:lipika/features/profile/ui/screens/personal_details.dart';
 import 'package:lipika/features/profile/ui/screens/privacy_policy.dart';
@@ -18,8 +20,13 @@ final GoRouter appRouter = GoRouter(
   initialLocation: "/",
     routes: [
       GoRoute(
-        name: AppRouteConst.homeRouteName,
+        name: AppRouteConst.splashRouteName,
         path: "/",
+        pageBuilder: (context, state)=> const MaterialPage(child: SplashScreen()),
+      ),
+      GoRoute(
+        name: AppRouteConst.homeRouteName,
+        path: "/home",
         pageBuilder: (context, state)=> const MaterialPage(child: MainBottomNavScreen()),
       ),
       GoRoute(
@@ -66,6 +73,11 @@ final GoRouter appRouter = GoRouter(
         name: AppRouteConst.categoriesRouteName,
         path: "/categories",
         pageBuilder: (context, state)=> const MaterialPage(child: CategoriesScreen()),
+      ),
+      GoRoute(
+        name: AppRouteConst.uploadBookRouteName,
+        path: "/uploadBook",
+        pageBuilder: (context, state)=> const MaterialPage(child: UploadBookScreen()),
       ),
     ]
   );

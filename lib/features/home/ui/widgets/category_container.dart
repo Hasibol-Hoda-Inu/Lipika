@@ -18,7 +18,7 @@ class CategoryContainer extends StatelessWidget {
       onTap: onTapCategoryScreen,
       child: Container(
         width: 100,
-        padding: EdgeInsets.all(14),
+        padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppColors.borderColor),

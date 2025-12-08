@@ -54,20 +54,20 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
                       text: "Author: ",
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: "Author name\n",
                     ),
                     TextSpan(
                       text: "Book Name: ",
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: "Book Name\n",
                     ),
                     TextSpan(
                       text: "Book Description: ",
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
-                    ),TextSpan(
+                    ),const TextSpan(
                       text: "Fill up the information below to upload your book in the library",
                     ),
 
@@ -80,7 +80,7 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: Text("Continue"),
+                  child: const Text("Continue"),
                 ),
               ),
               const SizedBox(height: 10),

@@ -34,34 +34,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 32,),
+              const SizedBox(height: 32,),
               Text("Create your account", style: Theme.of(context).textTheme.titleLarge,),
-              SizedBox(height: 6,),
-              Text("Create a new account so you can read lots of interesting books"),
-              SizedBox(height: 32,),
+              const SizedBox(height: 6,),
+              const Text("Create a new account so you can read lots of interesting books"),
+              const SizedBox(height: 32,),
               buildSignUpForm(),
-              SizedBox(height: 40,),
+              const SizedBox(height: 40,),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: (){},
                   style: ElevatedButton.styleFrom(),
-                  child: Text("Sign up"),
+                  child: const Text("Sign up"),
                 ),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Forgot your password?"),
+                  const Text("Forgot your password?"),
                   TextButton(
                     onPressed: (){},
-                    child: Text("Reset here"),
+                    child: const Text("Reset here"),
                   )
                 ],
               ),
-              SizedBox(height: 20,),
-              Row(
+              const SizedBox(height: 20,),
+              const Row(
                 children: [
                   Expanded(
                     child: Divider(
@@ -75,7 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ))
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
@@ -85,10 +85,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     foregroundColor: Colors.black,
                   ),
                   icon: SvgPicture.asset(AssetsPath.google, width: 28, height: 28,),
-                  label: Text("Sign up with Google"),
+                  label: const Text("Sign up with Google"),
                 ),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -129,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       )),
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
             ],
           ),
         ),
@@ -153,7 +153,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         return null;
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "nick name",
                         labelText: "Name",
                       ),
@@ -169,7 +169,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         }
                         return null;
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "youremail@mail.com",
                         labelText: "Email",
                       ),
@@ -186,7 +186,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         return null;
                       },
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "input your password",
                         labelText: "Password",
                       ),
