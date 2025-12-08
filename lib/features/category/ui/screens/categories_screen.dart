@@ -13,22 +13,22 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Category Name"),
+        title: const Text("Category Name"),
         centerTitle: true,
       ),
       body: Column(
         children: [
           Expanded(
             child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 42,
                   mainAxisSpacing: 20,
                   childAspectRatio: 0.56,
                 ),
-                itemBuilder: (context, index)=> BookContainer(),
+                itemBuilder: (context, index)=> const BookContainer(),
                 itemCount: 12,
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
             ),
           )
         ],

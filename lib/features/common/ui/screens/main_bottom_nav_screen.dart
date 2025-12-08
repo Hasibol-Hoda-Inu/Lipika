@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lipika/application/app_colors.dart';
+import 'package:lipika/features/library/ui/screens/my_library.dart';
 import 'package:lipika/features/my_books/ui/screen/my_books.dart';
 import 'package:lipika/features/profile/ui/screens/profile.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   final List<Widget> _screens = const [
     HomeScreen(),
     MyBooks(),
-    HomeScreen(),
+    MyLibrary(),
     Profile(),
   ];
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lipika/features/category/ui/screens/categories_screen.dart';
 import 'package:lipika/features/checkout_funnel/ui/screens/checkout.dart';
 import 'package:lipika/features/checkout_funnel/ui/screens/order_confirmation.dart';
 import 'package:lipika/features/profile/ui/screens/account_settings.dart';
@@ -60,6 +61,11 @@ final GoRouter appRouter = GoRouter(
         name: AppRouteConst.returnPolicyRouteName,
         path: "/returnPolicy",
         pageBuilder: (context, state)=> const MaterialPage(child: ReturnPolicy()),
+      ),
+      GoRoute(
+        name: AppRouteConst.categoriesRouteName,
+        path: "/categories",
+        pageBuilder: (context, state)=> const MaterialPage(child: CategoriesScreen()),
       ),
     ]
   );
