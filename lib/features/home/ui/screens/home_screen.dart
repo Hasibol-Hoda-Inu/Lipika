@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lipika/application/assets_path.dart';
 import 'package:lipika/features/common/ui/widgets/book_search_anchor.dart';
 import 'package:lipika/features/home/ui/widgets/carousel_slider.dart';
 
 import '../../../../application/app_colors.dart';
+import '../../../../application/routes/app_route_const.dart';
 import '../../../category/ui/screens/categories_screen.dart';
 import '../widgets/book_container.dart';
 import '../widgets/category_container.dart';
@@ -31,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         actions: [
           IconButton.filledTonal(
-            onPressed: () {},
+            onPressed: _onTapCart,
             icon: const Icon(Icons.shopping_cart_outlined),
           ),
           const SizedBox(width: 12),
@@ -130,5 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
       MaterialPageRoute(builder: (context) => const CategoriesScreen()),
     );
+  }
+
+  void _onTapCart(){
+    GoRouter.of(context).pushNamed(AppRouteConst.cartRouteName);
   }
 }

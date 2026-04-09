@@ -11,26 +11,28 @@ class UploadBookScreen extends StatefulWidget {
 }
 
 class _UploadBookScreenState extends State<UploadBookScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Upload Book"),
         centerTitle: true,
-        actions: [
-          SizedBox(
-            width: 90,
-            child: ElevatedButton.icon(
-                onPressed: (){},
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-              ),
-                icon: const Icon(Icons.edit),
-                label: const Text("Add"),
-            ),
-          ),
-          const SizedBox(width: 12,),
-        ],
+        // actions: [
+        //   SizedBox(
+        //     width: 90,
+        //     child: ElevatedButton.icon(
+        //         onPressed: (){},
+        //       style: ElevatedButton.styleFrom(
+        //         padding: const EdgeInsets.symmetric(vertical: 10),
+        //       ),
+        //         icon: const Icon(Icons.edit),
+        //         label: const Text("Add"),
+        //     ),
+        //   ),
+        //   const SizedBox(width: 12,),
+        // ],
         elevation: 4,
       ),
       body: SingleChildScrollView(
@@ -40,41 +42,58 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 12,),
-              SizedBox(
-                width: double.infinity,
-                height: 340,
-                child: Image.asset(AssetsPath.book),
-              ),
-              const SizedBox(height: 20),
-              RichText(
-                  text: TextSpan(
-                    style: Theme.of(context).textTheme.bodyMedium,
+              Form(
+                key: _formKey,
+                child: Column(
+                  spacing: 12,
                   children: [
-                    TextSpan(
-                      text: "Author: ",
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Book Name",
+                      ),
                     ),
-                    const TextSpan(
-                      text: "Author name\n",
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Author Name",
+                      ),
                     ),
-                    TextSpan(
-                      text: "Book Name: ",
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          labelText: "Publisher Name"
+                      ),
                     ),
-                    const TextSpan(
-                      text: "Book Name\n",
+                    Row(
+                      spacing: 12,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                                labelText: "Price"
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                                labelText: "Edition"
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    TextSpan(
-                      text: "Book Description: ",
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
-                    ),const TextSpan(
-                      text: "Fill up the information below to upload your book in the library",
+                    TextFormField(
+                      maxLines: 3,
+                      textAlignVertical: TextAlignVertical.top,
+                      decoration: const InputDecoration(
+                        labelText: "Description",
+                        alignLabelWithHint: true
+                      ),
                     ),
-
-                  ]
-              )),
-              const SizedBox(height: 20),
-              const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20,),
               const ChooseOptions(),
               SizedBox(
                 width: double.infinity,
