@@ -9,6 +9,6 @@
 - Auth: Firebase/Supabase
 - BAAS: Supabase
 
-- ![App ui idea](assets/images/app_ui.png)
+- ![App ui idea](assets/images/lipika.webp)
 
 

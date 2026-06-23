@@ -9,7 +9,7 @@ void main()async{
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
       url: KeySup.url,
-      anonKey: KeySup.spPublishableKey,
+      publishableKey: KeySup.spPublishableKey,
   );
 
   runApp(

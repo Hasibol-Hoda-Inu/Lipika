@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lipika/application/assets_path.dart';
 
 import '../widgets/choose_options.dart';
 
