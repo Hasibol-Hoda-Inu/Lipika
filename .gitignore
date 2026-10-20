@@ -46,3 +46,29 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+
+
+# ==========================================
+# CUSTOM SECURITY & SECRET FILES (DO NOT COMMIT)
+# ==========================================
+
+# 1. Environment variables and API keys
+# If you use the flutter_dotenv package or store API keys here:
+*.env
+.env*
+
+# 2. Firebase / Google Cloud configs (Optional but recommended for public repos)
+# If you haven't restricted your API keys in Google Cloud, bots can scrape these
+# files and abuse your quota.
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+macos/Runner/GoogleService-Info.plist
+
+
+# 5. Keystores (Backup just in case they are placed in the root folder)
+*.jks
+*.keystore
+key.properties
+
+lib/application/const/
