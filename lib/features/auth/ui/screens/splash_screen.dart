@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _goToNextScreen()async{
       await Future.delayed(const Duration(seconds: 2));
       if(mounted) {
-        GoRouter.of(context).pushReplacementNamed(AppRouteConst.homeRouteName);
+        GoRouter.of(context).pushReplacementNamed(AppRouteConst.signUpRouteName);
       }
   }
 

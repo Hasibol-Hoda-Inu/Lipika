@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lipika/features/auth/ui/screens/login_screen.dart';
+import 'package:lipika/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:lipika/features/auth/ui/screens/splash_screen.dart';
 import 'package:lipika/features/category/ui/screens/categories_screen.dart';
 import 'package:lipika/features/checkout_funnel/ui/screens/checkout.dart';
@@ -28,6 +30,16 @@ final GoRouter appRouter = GoRouter(
         name: AppRouteConst.homeRouteName,
         path: "/home",
         pageBuilder: (context, state)=> const MaterialPage(child: MainBottomNavScreen()),
+      ),
+      GoRoute(
+        name: AppRouteConst.signUpRouteName,
+        path: "/signUp",
+        pageBuilder: (context, state)=> const MaterialPage(child: SignUpScreen()),
+      ),
+      GoRoute(
+        name: AppRouteConst.loginRouteName,
+        path: "/login",
+        pageBuilder: (context, state)=> const MaterialPage(child: LoginScreen()),
       ),
       GoRoute(
         name: AppRouteConst.profileRouteName,

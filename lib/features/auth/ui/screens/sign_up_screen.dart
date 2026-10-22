@@ -1,10 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lipika/application/app_colors.dart';
+import 'package:lipika/application/routes/app_route_const.dart';
 import 'package:lipika/features/auth/ui/utils/regex_validators.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../application/assets_path.dart';
+import '../../data/model/sign_up_result_model.dart';
+import '../../data/services/auth_service.dart';
+import '../controllers/auth_controller.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -18,6 +24,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +49,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 32,),
               buildSignUpForm(),
               const SizedBox(height: 40,),
-              SizedBox(
+              Consumer<AuthController>(
+                builder: (context, controller, child) {
+                  return SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: (){},
+                  onPressed: _signUp,
                   style: ElevatedButton.styleFrom(),
-                  child: const Text("Sign up"),
+                  child: controller.isLoading ? const CircularProgressIndicator() : const Text("Sign up"),
                 ),
+                  );
+                },
               ),
               const SizedBox(height: 20,),
               Row(
@@ -85,7 +97,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     foregroundColor: Colors.black,
                   ),
                   icon: SvgPicture.asset(AssetsPath.google, width: 28, height: 28,),
-                  label: const Text("Sign up with Google"),
+                  label: const Text("Continue with Google"),
+                ),
+              ),
+              const SizedBox(height: 10,),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: (){},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                  ),
+                  icon: Icon(Icons.apple, size: 28,),
+                  label: const Text("Continue with Apple"),
                 ),
               ),
               const SizedBox(height: 20,),
@@ -143,24 +168,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Column(
                   spacing: 20,
                   children: [
-                    TextFormField(
-                      controller: _nameController,
-                      keyboardType: TextInputType.name,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your name';
-                        }
-                        return null;
-                      },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
-                        hintText: "nick name",
-                        labelText: "Name",
-                      ),
-                    ),
+                    // TextFormField(
+                    //   controller: _nameController,
+                    //   keyboardType: TextInputType.name,
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Please enter your name';
+                    //     }
+                    //     return null;
+                    //   },
+                    //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //   decoration: const InputDecoration(
+                    //     hintText: "nick name",
+                    //     labelText: "Name",
+                    //   ),
+                    // ),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value){
                         if(value == null || value.isEmpty){
                           return "Please enter your email";
@@ -193,6 +219,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ));
+  }
+
+  void _signUp() async {
+    if (_formKey.currentState!.validate()) {
+      final SignUpResult result = await _authService.signUp(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      switch (result.status) {
+        case SignUpStatus.success:
+          debugPrint("Signup successful");
+          break;
+
+        case SignUpStatus.verificationRequired:
+          debugPrint("Please check your email for verification");
+          break;
+
+        case SignUpStatus.failed:
+          debugPrint(result.error);
+          break;
+      }
+    }
   }
 
   @override
