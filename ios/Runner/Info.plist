@@ -45,5 +45,24 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+    <!-- Supabase Authentication Deep Link -->
+
+    <key>FlutterDeepLinkingEnabled</key>
+    <false/>
+
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>io.lipika.app</string>
+            </array>
+        </dict>
+    </array>
+
 </dict>
 </plist>

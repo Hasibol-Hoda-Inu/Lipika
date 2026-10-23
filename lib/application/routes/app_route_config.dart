@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lipika/features/auth/ui/screens/email_confirmation_screen.dart';
 import 'package:lipika/features/auth/ui/screens/login_screen.dart';
 import 'package:lipika/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:lipika/features/auth/ui/screens/splash_screen.dart';
@@ -35,6 +36,14 @@ final GoRouter appRouter = GoRouter(
         name: AppRouteConst.signUpRouteName,
         path: "/signUp",
         pageBuilder: (context, state)=> const MaterialPage(child: SignUpScreen()),
+      ),
+      GoRoute(
+        name: AppRouteConst.emailConfirmationRouteName,
+        path: "/emailConfirmation",
+        pageBuilder: (context, state) {
+          final String email = state.extra as String? ?? "";
+          return MaterialPage(child: EmailConfirmationScreen(email: email));
+        },
       ),
       GoRoute(
         name: AppRouteConst.loginRouteName,

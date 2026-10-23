@@ -8,6 +8,7 @@ import 'package:lipika/features/auth/ui/utils/regex_validators.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../application/assets_path.dart';
+import '../../../common/ui/widgets/app_snackbar.dart';
 import '../../data/model/sign_up_result_model.dart';
 import '../../data/services/auth_service.dart';
 import '../controllers/auth_controller.dart';
@@ -56,7 +57,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: ElevatedButton(
                   onPressed: _signUp,
                   style: ElevatedButton.styleFrom(),
-                  child: controller.isLoading ? const CircularProgressIndicator() : const Text("Sign up"),
+                  child: controller.isLoading
+                      ? const SizedBox(
+                      height: 22,
+                      width: 22,
+                      child: CircularProgressIndicator(strokeWidth: 2,)) : const Text("Sign up"),
                 ),
                   );
                 },
@@ -223,22 +228,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _signUp() async {
     if (_formKey.currentState!.validate()) {
+      String mail = _emailController.text.trim();
+      String pass = _passwordController.text;
+
       final SignUpResult result = await _authService.signUp(
-        email: _emailController.text,
-        password: _passwordController.text,
+        email: mail,
+        password: pass,
       );
 
+      if(!mounted) return;
+
       switch (result.status) {
-        case SignUpStatus.success:
-          debugPrint("Signup successful");
+        case SignUpStatus.verificationRequired:
+          GoRouter.of(context).pushReplacementNamed(AppRouteConst.emailConfirmationRouteName, extra: mail);
           break;
 
-        case SignUpStatus.verificationRequired:
-          debugPrint("Please check your email for verification");
+        case SignUpStatus.success:
+          AppSnackBar.show(context, message: "Sign up successful", type: SnackBarType.success);
+          GoRouter.of(context).pushReplacementNamed(AppRouteConst.homeRouteName);
           break;
 
         case SignUpStatus.failed:
-          debugPrint(result.error);
+          AppSnackBar.show(context, message: "Something went wrong. Please try again.", type: SnackBarType.error);
           break;
       }
     }
