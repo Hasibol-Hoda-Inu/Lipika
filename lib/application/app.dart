@@ -1,10 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lipika/application/routes/app_route_config.dart';
-import 'package:lipika/application/routes/app_route_const.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:provider/provider.dart';
 
+import '../features/auth/ui/controllers/auth_session_controller.dart';
 import 'app_theme.dart';
 
 class Lipika extends StatefulWidget {
@@ -15,12 +14,15 @@ class Lipika extends StatefulWidget {
 }
 
 class _LipikaState extends State<Lipika> {
-  late final StreamSubscription<AuthState> _authSubscription;
+
+  late final GoRouter _router;
 
   @override
   void initState() {
     super.initState();
-    _listenToAuthChanges();
+    final AuthSessionController authSession =
+    context.read<AuthSessionController>();
+    _router = createAppRouter(authSession);
   }
 
   @override
@@ -28,41 +30,17 @@ class _LipikaState extends State<Lipika> {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
 
-      routeInformationParser: appRouter.routeInformationParser,
-      routerDelegate: appRouter.routerDelegate,
-      routeInformationProvider: appRouter.routeInformationProvider,
+      routerConfig: _router,
 
       theme: AppThemeData.lightThemeData,
       darkTheme: AppThemeData.darkThemeData,
       themeMode: ThemeMode.light,
-
-      // home: const MainBottomNavScreen(),
-    );
-  }
-
-  void _listenToAuthChanges() {
-    _authSubscription = Supabase.instance.client.auth.onAuthStateChange.listen(
-      (AuthState data) {
-        final AuthChangeEvent event = data.event;
-        final Session? session = data.session;
-
-        if (event == AuthChangeEvent.signedIn && session != null) {
-          debugPrint("✅ User authenticated successfully");
-          appRouter.pushReplacementNamed(AppRouteConst.homeRouteName);
-        }else if(event == AuthChangeEvent.signedOut){
-          debugPrint("❎ User signed out");
-          appRouter.pushReplacementNamed(AppRouteConst.loginRouteName);
-        }
-      },
-      onError: (Object error) {
-        debugPrint("❎ Auth listener error: $error");
-      },
     );
   }
 
   @override
   void dispose() {
-    _authSubscription.cancel();
+    _router.dispose();
     super.dispose();
   }
 }
