@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lipika/application/assets_path.dart';
 import 'package:lipika/features/auth/ui/screens/sign_up_screen.dart';
+import 'package:lipika/features/auth/ui/widgets/social_auth_buttons.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(AssetsPath.logo, height: 50,),
+        title: Image.asset(AssetsPath.logo, height: 50),
         centerTitle: true,
       ),
       body: Padding(
@@ -64,37 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Expanded(child: Divider(indent: 10)),
                 ],
               ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                  ),
-                  icon: SvgPicture.asset(
-                    AssetsPath.google,
-                    width: 28,
-                    height: 28,
-                  ),
-                  label: const Text("Login with Google"),
-                ),
-              ),
-              const SizedBox(height: 10,),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: (){},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: Icon(Icons.apple, size: 28,),
-                  label: const Text("Continue with Apple"),
-                ),
-              ),
-              const SizedBox(height: 20),
+              const SocialAuthButtons(googleButtonText: 'Login with Google',),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -127,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
               return null;
             },
             keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
             decoration: const InputDecoration(
               hintText: "youremail@mail.com",
               labelText: "Email",
@@ -142,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
             },
             keyboardType: TextInputType.visiblePassword,
             obscureText: true,
+            textInputAction: TextInputAction.done,
             decoration: const InputDecoration(
               hintText: "input your password",
               labelText: "Password",

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lipika/application/app_colors.dart';
 import 'package:lipika/application/routes/app_route_const.dart';
 import 'package:lipika/features/auth/ui/utils/regex_validators.dart';
+import 'package:lipika/features/auth/ui/widgets/social_auth_buttons.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../application/assets_path.dart';
@@ -92,33 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ))
                 ],
               ),
-              const SizedBox(height: 20,),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: (){},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                  ),
-                  icon: SvgPicture.asset(AssetsPath.google, width: 28, height: 28,),
-                  label: const Text("Continue with Google"),
-                ),
-              ),
-              const SizedBox(height: 10,),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: (){},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: Icon(Icons.apple, size: 28,),
-                  label: const Text("Continue with Apple"),
-                ),
-              ),
-              const SizedBox(height: 20,),
+              const SocialAuthButtons(googleButtonText: "Continue with Google"),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -183,6 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     //     return null;
                     //   },
                     //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //   textInputAction: TextInputAction.next,
                     //   decoration: const InputDecoration(
                     //     hintText: "nick name",
                     //     labelText: "Name",
@@ -192,6 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      textInputAction: TextInputAction.next,
                       validator: (value){
                         if(value == null || value.isEmpty){
                           return "Please enter your email";
@@ -208,6 +185,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextFormField(
                       keyboardType: TextInputType.visiblePassword,
                       controller: _passwordController,
+                      textInputAction: TextInputAction.done,
                       validator: (value){
                         if(value == null || value.isEmpty){
                           return "Please enter your password";
@@ -245,7 +223,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         case SignUpStatus.success:
           AppSnackBar.show(context, message: "Sign up successful", type: SnackBarType.success);
-          GoRouter.of(context).pushReplacementNamed(AppRouteConst.homeRouteName);
           break;
 
         case SignUpStatus.failed:

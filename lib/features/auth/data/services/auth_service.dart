@@ -57,6 +57,20 @@ class AuthService {
     }
   }
 
+  Future<void> signInWithGoogle() async {
+    final bool launched =
+    await supabase.auth.signInWithOAuth(
+      OAuthProvider.google,
+      redirectTo: 'io.lipika.app://login-callback/',
+    );
+
+    if (!launched) {
+      throw const AuthException(
+        'Could not open Google Sign-In.',
+      );
+    }
+  }
+
   Future<void> logout() async {
     try {
       await supabase.auth.signOut();

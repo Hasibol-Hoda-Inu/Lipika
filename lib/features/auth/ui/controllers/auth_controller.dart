@@ -13,13 +13,16 @@ class AuthController extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  String? _googleSignInError;
+  String? get googleSignInError => _googleSignInError;
+
   bool _isResending = false;
   String? _resendError;
 
   bool get isResending => _isResending;
   String? get resendError => _resendError;
 
-  Future<SignUpResult> signUp({required String email, required String password,}) async {
+  Future<SignUpResult> signUp({required String email, required String password}) async {
     if (_isLoading) {
       return const SignUpResult(
         status: SignUpStatus.failed,
@@ -71,6 +74,32 @@ class AuthController extends ChangeNotifier {
       return false;
     } finally {
       _isResending = false;
+      notifyListeners();
+    }
+  }
+
+  Future<bool> signInWithGoogle() async {
+    if (_isLoading) return false;
+
+    _isLoading = true;
+    _googleSignInError = null;
+    notifyListeners();
+
+    try {
+      await _authService.signInWithGoogle();
+
+      debugPrint("✅ Google OAuth launched successfully");
+      return true;
+    } on AuthException catch (e) {
+      _googleSignInError = e.message;
+      debugPrint("❎ Google Sign-In error: ${e.message}");
+      return false;
+    } catch (e) {
+      _googleSignInError = "Something went wrong. Please try again.";
+      debugPrint("❎ Unexpected Google Sign-In error: $e");
+      return false;
+    } finally {
+      _isLoading = false;
       notifyListeners();
     }
   }
