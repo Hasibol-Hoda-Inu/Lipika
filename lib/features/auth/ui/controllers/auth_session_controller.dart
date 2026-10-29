@@ -6,6 +6,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 enum AppAuthStatus { initializing, authenticated, unauthenticated }
 
 class AuthSessionController extends ChangeNotifier {
+  Timer? _splashTimer;
+
+  bool _isSplashComplete = false;
+  bool get isSplashComplete => _isSplashComplete;
+
   final SupabaseClient _supabase;
   late final StreamSubscription<AuthState> _authSubscription;
   AppAuthStatus _status = AppAuthStatus.initializing;
@@ -64,9 +69,19 @@ class AuthSessionController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void startSplashTimer() {
+    if (_splashTimer != null || _isSplashComplete) return;
+
+    _splashTimer = Timer(const Duration(seconds: 1), () {
+      _isSplashComplete = true;
+      notifyListeners();
+    });
+  }
+
   @override
   void dispose() {
     _authSubscription.cancel();
+    _splashTimer?.cancel();
     super.dispose();
   }
 }

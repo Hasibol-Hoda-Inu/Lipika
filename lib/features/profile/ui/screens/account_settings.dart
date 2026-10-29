@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../application/app_colors.dart';
+import '../../../auth/ui/controllers/auth_controller.dart';
+import '../../../common/ui/widgets/app_snackbar.dart';
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
@@ -44,28 +47,31 @@ class _AccountSettingsState extends State<AccountSettings> {
                     child: Icon(Icons.arrow_forward_ios_rounded, size: 16)),
               ),
               ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.borderColor),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: ListTile(
-                titleAlignment: ListTileTitleAlignment.top,
-                leading: const Icon(Icons.login_rounded),
-                title: Text("Logout",
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600
-                  ),),
-                subtitle: Text("Sign out of your account",
-                  style: Theme.of(context).textTheme.bodyMedium,
+            GestureDetector(
+              onTap: onTapLogOut,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.borderColor),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                trailing: const Center(
-                    widthFactor: 1.0,
-                    child: Icon(Icons.arrow_forward_ios_rounded, size: 16)),
-              ),
-              ),
+                child: ListTile(
+                  titleAlignment: ListTileTitleAlignment.top,
+                  leading: const Icon(Icons.login_rounded),
+                  title: Text("Logout",
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600
+                    ),),
+                  subtitle: Text("Sign out of your account",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: const Center(
+                      widthFactor: 1.0,
+                      child: Icon(Icons.arrow_forward_ios_rounded, size: 16)),
+                ),
+                ),
+            ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
@@ -93,5 +99,12 @@ class _AccountSettingsState extends State<AccountSettings> {
         ),
       ),
     );
+  }
+
+  void onTapLogOut()async{
+    final bool isSuccess = await context.read<AuthController>().logout();
+    if(isSuccess && mounted){
+      AppSnackBar.show(context, message: "Successfully logged out", type: SnackBarType.success);
+    }
   }
 }

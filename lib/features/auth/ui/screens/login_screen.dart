@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lipika/application/assets_path.dart';
+import 'package:lipika/application/routes/app_route_const.dart';
 import 'package:lipika/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:lipika/features/auth/ui/widgets/social_auth_buttons.dart';
+import 'package:provider/provider.dart';
+
+import '../../../common/ui/widgets/app_snackbar.dart';
+import '../controllers/auth_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -43,11 +49,20 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 40),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: onCLickSignUpScreen,
-                  style: ElevatedButton.styleFrom(),
-                  child: const Text("Login"),
-                ),
+                child: Consumer<AuthController>(
+                    builder: (context, controller, child) {
+                      return ElevatedButton(
+                      onPressed: controller.isLoading ? null : _login,
+                      child: controller.isLoading ? const SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                      ) : const Text("Login"),
+                      );
+                    }
+                    ),
               ),
               const SizedBox(height: 20),
               Row(
@@ -71,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   const Text("Don't have an account? "),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: goToSignUpScreen,
                     child: const Text("Register here"),
                   ),
                 ],
@@ -125,20 +140,32 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void onCLickSignUpScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const SignUpScreen()),
-    );
-  }
+  Future<void> _login() async {
+    if (!_formKey.currentState!.validate()) return;
 
-  void onTapNextScreen() {
-    if (_formKey.currentState!.validate()) {
-      Navigator.push(
+    final String email = _emailController.text;
+    final String password = _passwordController.text;
+
+    final AuthController controller = context.read<AuthController>();
+
+    final String? error = await controller.login(
+      email: email,
+      password: password,
+    );
+
+    if (!mounted) return;
+
+    if (error != null) {
+      AppSnackBar.show(
         context,
-        MaterialPageRoute(builder: (context) => const SignUpScreen()),
+        message: error,
+        type: SnackBarType.error,
       );
     }
+  }
+
+  void goToSignUpScreen(){
+    GoRouter.of(context).pushReplacementNamed(AppRouteConst.signUpRouteName);
   }
 
   @override

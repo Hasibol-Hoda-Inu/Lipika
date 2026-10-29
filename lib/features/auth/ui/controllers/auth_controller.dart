@@ -78,6 +78,28 @@ class AuthController extends ChangeNotifier {
     }
   }
 
+  Future<String?> login({required String email, required String password}) async {
+    if (_isLoading) {
+      return "Another authentication request is in progress.";
+    }
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final String? error = await _authService.login(email.trim(), password);
+
+      return error;
+    } catch (e) {
+      debugPrint("❎ Controller login error: $e");
+      return "Something went wrong. Please try again.";
+
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<bool> signInWithGoogle() async {
     if (_isLoading) return false;
 
@@ -104,16 +126,19 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  Future<void> logout() async {
-    if (_isLoading) return;
+  Future<bool> logout() async {
+    if (_isLoading) return false;
 
     _isLoading = true;
     notifyListeners();
 
     try {
       await _authService.logout();
+      debugPrint("✅ Logout successful");
+      return true;
     } catch (e) {
       debugPrint("❎ Controller logout error: $e");
+      return false;
     } finally {
       _isLoading = false;
       notifyListeners();

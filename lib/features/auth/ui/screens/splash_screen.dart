@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lipika/application/assets_path.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../application/routes/app_route_const.dart';
+import '../controllers/auth_session_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,16 +16,14 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
 
   @override
-  initState(){
+  void initState() {
     super.initState();
-    _goToNextScreen();
-  }
 
-  Future<void> _goToNextScreen()async{
-      await Future.delayed(const Duration(seconds: 2));
-      if(mounted) {
-        GoRouter.of(context).pushReplacementNamed(AppRouteConst.signUpRouteName);
-      }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
+      context.read<AuthSessionController>().startSplashTimer();
+    });
   }
 
   @override

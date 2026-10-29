@@ -24,21 +24,41 @@ GoRouter createAppRouter(AuthSessionController authSession) {
     initialLocation: "/",
     refreshListenable: authSession,
     redirect: (BuildContext context, GoRouterState state) {
-      final String? routeName = state.name;
+      debugPrint("❎ GoRouter: ${state.matchedLocation} | Auth: ${authSession.status}",);
+
+
+      final String currentPath = state.matchedLocation;
 
       final String splashPath = state.namedLocation(
         AppRouteConst.splashRouteName,
       );
+
       final String loginPath = state.namedLocation(
         AppRouteConst.loginRouteName,
       );
-      final String homePath = state.namedLocation(AppRouteConst.homeRouteName);
-      final bool isSplash = routeName == AppRouteConst.splashRouteName;
+
+      final String homePath = state.namedLocation(
+        AppRouteConst.homeRouteName,
+      );
+
+      final String signUpPath = state.namedLocation(
+        AppRouteConst.signUpRouteName,
+      );
+
+      final String confirmationPath = state.namedLocation(
+        AppRouteConst.emailConfirmationRouteName,
+      );
+
+      final bool isSplash = currentPath == splashPath;
 
       final bool isAuthRoute =
-          routeName == AppRouteConst.loginRouteName ||
-          routeName == AppRouteConst.signUpRouteName ||
-          routeName == AppRouteConst.emailConfirmationRouteName;
+          currentPath == loginPath ||
+              currentPath == signUpPath ||
+              currentPath == confirmationPath;
+
+      if (!authSession.isSplashComplete) {
+        return isSplash ? null : splashPath;
+      }
 
       switch (authSession.status) {
         case AppAuthStatus.initializing:
