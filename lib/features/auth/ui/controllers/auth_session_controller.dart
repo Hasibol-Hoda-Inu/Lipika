@@ -11,6 +11,9 @@ class AuthSessionController extends ChangeNotifier {
   bool _isSplashComplete = false;
   bool get isSplashComplete => _isSplashComplete;
 
+  bool _isPasswordRecovery = false;
+  bool get isPasswordRecovery => _isPasswordRecovery;
+
   final SupabaseClient _supabase;
   late final StreamSubscription<AuthState> _authSubscription;
   AppAuthStatus _status = AppAuthStatus.initializing;
@@ -40,7 +43,15 @@ class AuthSessionController extends ChangeNotifier {
             _updateSession(session);
             break;
 
+          case AuthChangeEvent.passwordRecovery:
+            _isPasswordRecovery = session != null;
+            _updateSession(session);
+            notifyListeners();
+            debugPrint("✅ Password recovery session detected");
+            break;
+
           case AuthChangeEvent.signedOut:
+            _isPasswordRecovery = false;
             _setStatus(AppAuthStatus.unauthenticated);
             break;
 

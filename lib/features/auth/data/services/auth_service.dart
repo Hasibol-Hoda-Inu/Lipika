@@ -57,6 +57,23 @@ class AuthService {
     }
   }
 
+
+  Future<void> sendPasswordResetEmail({required String email,}) async {
+    await supabase.auth.resetPasswordForEmail(
+      email,
+      redirectTo: 'io.lipika.app://login-callback/',
+    );
+  }
+
+  Future<void> updatePassword({required String newPassword,}) async {
+    await supabase.auth.updateUser(
+      UserAttributes(
+        password: newPassword,
+      ),
+    );
+  }
+
+
   Future<void> signInWithGoogle() async {
     final bool launched =
     await supabase.auth.signInWithOAuth(

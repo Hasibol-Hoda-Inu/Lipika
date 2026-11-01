@@ -28,6 +28,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   final AuthService _authService = AuthService();
+  
+  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +73,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Forgot your password?"),
+                  const Text("Already have an account?"),
                   TextButton(
-                    onPressed: (){},
-                    child: const Text("Reset here"),
+                    onPressed: goToLogin,
+                    child: const Text("Login"),
                   )
                 ],
               ),
@@ -169,6 +171,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: _emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       textInputAction: TextInputAction.next,
+                      autofillHints: const [AutofillHints.email],
                       validator: (value){
                         if(value == null || value.isEmpty){
                           return "Please enter your email";
@@ -180,6 +183,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       decoration: const InputDecoration(
                         hintText: "youremail@mail.com",
                         labelText: "Email",
+                        prefixIcon: Icon(Icons.email_outlined),
                       ),
                     ),
                     TextFormField(
@@ -195,9 +199,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         return null;
                       },
                       obscureText: true,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: "input your password",
                         labelText: "Password",
+                        prefixIcon: const Icon(Icons.lock_outline),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword =
+                              !_obscurePassword;
+                            });
+                          },
+                          icon: Icon(
+                            _obscurePassword
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -230,6 +248,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           break;
       }
     }
+  }
+
+  void goToLogin(){
+    GoRouter.of(context).pushReplacementNamed(AppRouteConst.loginRouteName);
   }
 
   @override

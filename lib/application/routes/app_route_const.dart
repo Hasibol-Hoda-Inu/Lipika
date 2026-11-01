@@ -3,6 +3,8 @@ class AppRouteConst {
   static const String signUpRouteName = "signUp";
   static const String loginRouteName = "login";
   static const String emailConfirmationRouteName = "emailConfirmation";
+  static const String forgotPasswordRouteName = "forgotPassword";
+  static const String resetPasswordRouteName = "resetPassword";
 
   static const String homeRouteName = "home";
 

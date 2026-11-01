@@ -10,7 +10,6 @@ Lipika bridges the gap between avid readers by providing a dedicated platform to
 
 * **Community Marketplace:** Discover, list, and exchange second-hand books within your local community.
 * **AI-Assisted Features:** Smart recommendations and content capabilities integrated via Firebase AI workflows.
-* **Seamless Authentication:** Secure user sign-in and session management.
 * **Real-time Data Sync:** Dynamic catalog updates and messaging powered by Supabase.
 
 ---
@@ -23,7 +22,7 @@ Lipika is built following Flutter best practices to ensure scalability, maintain
 * **State Management:** [Provider](https://pub.dev/packages/provider)
 * **Routing:** [GoRouter](https://pub.dev/packages/go_router)
 * (UPCOMING) **Backend as a Service (BaaS):** [Supabase](https://supabase.com/)
-* (UPCOMING) **Authentication:** Supabase Auth / Firebase Auth
+*  **Authentication:** Supabase Auth
 * (UPCOMING) **AI Integration:** Firebase Codelab / Gemini API
 
 ---

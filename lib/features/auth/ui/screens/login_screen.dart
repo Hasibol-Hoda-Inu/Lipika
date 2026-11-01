@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lipika/application/assets_path.dart';
 import 'package:lipika/application/routes/app_route_const.dart';
 import 'package:lipika/features/auth/ui/screens/sign_up_screen.dart';
+import 'package:lipika/features/auth/ui/utils/regex_validators.dart';
 import 'package:lipika/features/auth/ui/widgets/social_auth_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  
+  bool _obscurePassword = true;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,10 +69,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 children: [
                   const Text("Forgot your password? "),
-                  TextButton(onPressed: () {}, child: const Text("Reset here")),
+                  TextButton(onPressed: goToForgotPasswordScreen, child: const Text("Reset here")),
                 ],
               ),
               const SizedBox(height: 20),
@@ -109,14 +112,18 @@ class _LoginScreenState extends State<LoginScreen> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Please enter your email";
+              }else if(!value.validEmail()){
+                return "Please enter a valid email";
               }
               return null;
             },
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
+            autofillHints: const [AutofillHints.email],
             decoration: const InputDecoration(
               hintText: "youremail@mail.com",
               labelText: "Email",
+              prefixIcon: Icon(Icons.email_outlined),
             ),
           ),
           TextFormField(
@@ -130,9 +137,23 @@ class _LoginScreenState extends State<LoginScreen> {
             keyboardType: TextInputType.visiblePassword,
             obscureText: true,
             textInputAction: TextInputAction.done,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               hintText: "input your password",
               labelText: "Password",
+              prefixIcon: const Icon(Icons.lock_outline),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _obscurePassword =
+                    !_obscurePassword;
+                  });
+                },
+                icon: Icon(
+                  _obscurePassword
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                ),
+              ),
             ),
           ),
         ],
@@ -166,6 +187,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void goToSignUpScreen(){
     GoRouter.of(context).pushReplacementNamed(AppRouteConst.signUpRouteName);
+  }
+
+  void goToForgotPasswordScreen(){
+    GoRouter.of(context).pushReplacementNamed(AppRouteConst.forgotPasswordRouteName);
   }
 
   @override

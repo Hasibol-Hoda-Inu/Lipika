@@ -100,6 +100,48 @@ class AuthController extends ChangeNotifier {
     }
   }
 
+  Future<String?> sendPasswordResetEmail({required String email,}) async {
+    if (_isLoading) return "Another request is in progress.";
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      await _authService.sendPasswordResetEmail(email: email);
+      return null; // Success
+    } on AuthException catch (e) {
+      return e.message;
+    } catch (e) {
+      debugPrint("❎ Password reset email error: $e");
+      return "Something went wrong. Please try again.";
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<String?> updatePassword({required String newPassword,}) async {
+    if (_isLoading) return "Another request is in progress.";
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      await _authService.updatePassword(
+        newPassword: newPassword,
+      );
+      return null; // Success
+    } on AuthException catch (e) {
+      return e.message;
+    } catch (e) {
+      debugPrint("❎ Update password error: $e");
+      return "Unable to update password. Please try again.";
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<bool> signInWithGoogle() async {
     if (_isLoading) return false;
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lipika/features/auth/ui/screens/email_confirmation_screen.dart';
+import 'package:lipika/features/auth/ui/screens/forgot_password_screen.dart';
 import 'package:lipika/features/auth/ui/screens/login_screen.dart';
+import 'package:lipika/features/auth/ui/screens/reset_password_screen.dart';
 import 'package:lipika/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:lipika/features/auth/ui/screens/splash_screen.dart';
 import 'package:lipika/features/category/ui/screens/categories_screen.dart';
@@ -12,7 +14,8 @@ import 'package:lipika/features/profile/ui/screens/account_settings.dart';
 import 'package:lipika/features/profile/ui/screens/personal_details.dart';
 import 'package:lipika/features/profile/ui/screens/privacy_policy.dart';
 import 'package:lipika/features/profile/ui/screens/profile.dart';
-
+import 'package:provider/provider.dart';
+import 'package:lipika/features/auth/ui/controllers/auth_controller.dart';
 import '../../features/auth/ui/controllers/auth_session_controller.dart';
 import '../../features/checkout_funnel/ui/screens/cart.dart';
 import '../../features/common/ui/screens/main_bottom_nav_screen.dart';
@@ -49,15 +52,31 @@ GoRouter createAppRouter(AuthSessionController authSession) {
         AppRouteConst.emailConfirmationRouteName,
       );
 
+      final String forgotPasswordPath = state.namedLocation(
+        AppRouteConst.forgotPasswordRouteName,
+      );
+
+      final String resetPasswordPath = state.namedLocation(
+        AppRouteConst.resetPasswordRouteName,
+      );
+
+      final bool isResetPassword =
+          currentPath == resetPasswordPath;
+
       final bool isSplash = currentPath == splashPath;
 
       final bool isAuthRoute =
           currentPath == loginPath ||
               currentPath == signUpPath ||
-              currentPath == confirmationPath;
+              currentPath == confirmationPath ||
+              currentPath == forgotPasswordPath;
 
       if (!authSession.isSplashComplete) {
         return isSplash ? null : splashPath;
+      }
+
+      if (authSession.isPasswordRecovery) {
+        return isResetPassword ? null : resetPasswordPath;
       }
 
       switch (authSession.status) {
@@ -72,7 +91,7 @@ GoRouter createAppRouter(AuthSessionController authSession) {
           return loginPath;
 
         case AppAuthStatus.authenticated:
-          if (isSplash || isAuthRoute) {
+          if (isSplash || isAuthRoute || isResetPassword) {
             return homePath;
           }
 
@@ -111,6 +130,29 @@ GoRouter createAppRouter(AuthSessionController authSession) {
         path: "/login",
         pageBuilder: (context, state) =>
             const MaterialPage(child: LoginScreen()),
+      ),
+      GoRoute(
+        name: AppRouteConst.forgotPasswordRouteName,
+        path: "/forgotPassword",
+        pageBuilder: (context, state) => MaterialPage(
+                child: ForgotPasswordScreen(
+                    initialEmail: state.extra as String?,
+                    onSendResetLink: (mail) {
+                      return context.read<AuthController>().sendPasswordResetEmail(email: mail);
+                    })
+            ),
+      ),
+      GoRoute(
+        name: AppRouteConst.resetPasswordRouteName,
+        path: "/resetPassword",
+        pageBuilder: (context, state) => MaterialPage(
+          child: ResetPasswordScreen(
+            onUpdatePassword: (password) {
+              return context.read<AuthController>()
+                  .updatePassword(newPassword: password);
+            },
+          ),
+        ),
       ),
       GoRoute(
         name: AppRouteConst.profileRouteName,
