@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            SectionTitle(title: "Books for you", onTap: _onTapCategoryScreen,),
+            SectionTitle(title: "Purchasable Books", onTap: _onTapCategoryScreen,),
             const SizedBox(height: 12),
             SizedBox(
               height: 290,
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 30),
             const Divider(color: AppColors.borderColor, thickness: 8),
             const SizedBox(height: 30),
-            SectionTitle(title: "Most popular books", onTap: _onTapCategoryScreen,),
+            SectionTitle(title: "Books to Swap", onTap: _onTapCategoryScreen,),
             const SizedBox(height: 12),
             SizedBox(
               height: 290,
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            SectionTitle(title: "New books in library", onTap: _onTapCategoryScreen,),
+            SectionTitle(title: "Books for Borrow", onTap: _onTapCategoryScreen,),
             const SizedBox(height: 12),
             SizedBox(
               height: 290,

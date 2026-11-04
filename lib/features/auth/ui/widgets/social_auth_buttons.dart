@@ -40,11 +40,7 @@ class SocialAuthButtons extends StatelessWidget {
             onPressed: isLoading
                 ? null
                 : () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Apple Sign-In is not available yet."),
-                      ),
-                    );
+                    AppSnackBar.show(context, message: "Apple Sign-In is not available yet.", type: SnackBarType.error);
                   },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.black,

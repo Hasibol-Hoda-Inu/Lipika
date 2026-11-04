@@ -50,7 +50,7 @@ class _BookDetailsState extends State<BookDetails> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: onTapCartScreen,
-                          child: const Text("Add to Cart"),
+                          child: const Text("Contact Owner"),
                         ),
                       )
                     ],
