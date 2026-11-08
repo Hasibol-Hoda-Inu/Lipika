@@ -14,26 +14,57 @@ class CategoryContainer extends StatelessWidget {
   final CategoryModel category;
   final VoidCallback onTapCategoryScreen;
 
+  static const Map<String, IconData> categoryIcons =
+  <String, IconData>{
+    'auto_stories': Icons.auto_stories,
+    'menu_book': Icons.menu_book,
+    'format_quote': Icons.format_quote,
+    'school': Icons.school,
+    'quiz': Icons.quiz,
+    'science': Icons.science,
+    'computer': Icons.computer,
+    'history_edu': Icons.history_edu,
+    'person_outline': Icons.person_outline,
+    'business_center': Icons.business_center,
+    'self_improvement': Icons.self_improvement,
+    'psychology': Icons.psychology,
+    'child_care': Icons.child_care,
+    'collections_bookmark': Icons.collections_bookmark,
+    'category': Icons.category,
+  };
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTapCategoryScreen,
       child: Container(
-        width: 100,
-        padding: const EdgeInsets.all(14),
+        width: 132,
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppColors.borderColor),
         ),
         child: Column(
-          spacing: 24,
-          mainAxisAlignment: .spaceBetween,
           crossAxisAlignment: .start,
           children: [
-            Text(category.name, style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontSize: 18,
-            )),
-            SvgPicture.asset(AssetsPath.natural, width: 36, height: 36,),
+            Expanded(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(category.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      height: 1.2,
+                )),
+              ),
+            ),
+            Icon(
+              categoryIcons[category.iconName] ?? Icons.menu_book,
+              size: 32,
+              color: AppColors.themeColor,
+            )
           ],
         ),
       ),

@@ -17,7 +17,7 @@ class SectionTitle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontSize: 24,
+              fontSize: 22,
             ),
             ),
             TextButton(

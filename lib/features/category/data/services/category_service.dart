@@ -7,7 +7,7 @@ class CategoryService {
     final List<Map<String, dynamic>> categories =
     await _supabase
         .from('categories')
-        .select('id, name, slug, sort_order')
+        .select('id, name, slug, icon_name, sort_order')
         .eq('is_active', true)
         .order('sort_order', ascending: true)
         .order('name', ascending: true);

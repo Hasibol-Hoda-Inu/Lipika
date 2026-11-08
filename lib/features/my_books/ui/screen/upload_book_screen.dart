@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../application/app_colors.dart';
+import '../../../category/data/models/category_model.dart';
 import '../../../category/ui/controllers/category_controller.dart';
 import '../../../common/ui/widgets/app_snackbar.dart';
 import '../widgets/choose_options.dart';
@@ -22,6 +24,7 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
   final TextEditingController _descriptionController = TextEditingController();
 
   String? _selectedCondition;
+  String? _selectedCategoryId;
 
   BookUploadAction _selectedAction = BookUploadAction.library;
 
@@ -52,7 +55,7 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _uplaodBook,
                   child: const Text("Continue"),
                 ),
               ),
@@ -100,6 +103,52 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
               return null;
             },
           ),
+          Consumer<CategoryController>(
+            builder: (context, controller, child) {
+              final List<CategoryModel> categories = controller.categories;
+
+              if (!controller.hasLoaded && categories.isEmpty) {
+                return const LinearProgressIndicator();
+              }
+
+              if (controller.error != null && categories.isEmpty) {
+                return const Text("Unable to load categories.",);
+              }
+
+              return DropdownButtonFormField<String>(
+                initialValue: _selectedCategoryId,
+                isExpanded: true,
+                borderRadius: BorderRadius.circular(12),
+                menuMaxHeight: 420,
+                decoration: const InputDecoration(
+                  labelText: "Book Category",
+                  hintText: "Select a category",
+                ),
+                items: categories.map<DropdownMenuItem<String>>(
+                      (CategoryModel category) {
+                    return DropdownMenuItem<String>(
+                      value: category.id,
+                      child: Text(
+                        category.name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    );
+                  },
+                ).toList(),
+                onChanged: categories.isEmpty ? null : (String? value) {
+                  _selectedCategoryId = value;
+                },
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please select a category";
+                  }
+                  return null;
+                },
+              );
+
+            },
+          ),
+
           TextFormField(
             controller: _publisherController,
             textInputAction: TextInputAction.next,
@@ -135,13 +184,13 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
                 return null;
               },
             ),
-
           if (isPublicListing)
             DropdownButtonFormField<String>(
               initialValue: _selectedCondition,
               isExpanded: true,
               decoration: const InputDecoration(
                 labelText: "Book Condition",
+                hintText: "Select a condition",
               ),
               items: const [
                 DropdownMenuItem(
@@ -190,6 +239,14 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
     );
   }
 
+  void _uplaodBook(){
+    final bool isValid =
+        _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) return;
+
+    debugPrint("Selected Category ID: $_selectedCategoryId");
+  }
 
   @override
   void dispose() {

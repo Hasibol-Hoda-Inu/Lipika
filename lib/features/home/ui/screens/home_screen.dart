@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SectionTitle(title: 'Explore by categories', onTap: _onTapCategoryScreen,),
             const SizedBox(height: 12),
             SizedBox(
-              height: 140,
+              height: 126,
               child: Consumer<CategoryController>(
                 builder: (
                     BuildContext context,
@@ -109,7 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
-
             const SizedBox(height: 30),
             SectionTitle(title: "Purchasable Books", onTap: _onTapCategoryScreen,),
             const SizedBox(height: 12),

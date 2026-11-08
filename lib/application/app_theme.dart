@@ -19,6 +19,10 @@ class AppThemeData{
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: AppColors.borderColor),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: AppColors.borderColor),
+        ),
       ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
