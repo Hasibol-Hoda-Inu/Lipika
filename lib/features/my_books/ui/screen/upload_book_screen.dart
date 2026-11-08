@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../category/ui/controllers/category_controller.dart';
+import '../../../common/ui/widgets/app_snackbar.dart';
 import '../widgets/choose_options.dart';
 
 class UploadBookScreen extends StatefulWidget {
@@ -11,6 +14,16 @@ class UploadBookScreen extends StatefulWidget {
 
 class _UploadBookScreenState extends State<UploadBookScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _authorController = TextEditingController();
+  final TextEditingController _publisherController = TextEditingController();
+  final TextEditingController _editionController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
+  String? _selectedCondition;
+
+  BookUploadAction _selectedAction = BookUploadAction.library;
 
   @override
   Widget build(BuildContext context) {
@@ -18,21 +31,6 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
       appBar: AppBar(
         title: const Text("Upload Book"),
         centerTitle: true,
-        // actions: [
-        //   SizedBox(
-        //     width: 90,
-        //     child: ElevatedButton.icon(
-        //         onPressed: (){},
-        //       style: ElevatedButton.styleFrom(
-        //         padding: const EdgeInsets.symmetric(vertical: 10),
-        //       ),
-        //         icon: const Icon(Icons.edit),
-        //         label: const Text("Add"),
-        //     ),
-        //   ),
-        //   const SizedBox(width: 12,),
-        // ],
-        elevation: 4,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -41,59 +39,16 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 12,),
-              Form(
-                key: _formKey,
-                child: Column(
-                  spacing: 12,
-                  children: [
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: "Book Name",
-                      ),
-                    ),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: "Author Name",
-                      ),
-                    ),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                          labelText: "Publisher Name"
-                      ),
-                    ),
-                    Row(
-                      spacing: 12,
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                                labelText: "Price"
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                                labelText: "Edition"
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    TextFormField(
-                      maxLines: 3,
-                      textAlignVertical: TextAlignVertical.top,
-                      decoration: const InputDecoration(
-                        labelText: "Description",
-                        alignLabelWithHint: true
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              buildUploadBookForm(),
               const SizedBox(height: 20,),
-              const ChooseOptions(),
+              ChooseOptions(
+                selectedAction: _selectedAction,
+                onChanged: (BookUploadAction action) {
+                  setState(() {
+                    _selectedAction = action;
+                  });
+                },
+              ),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -107,6 +62,144 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
         ),
       ),
     );
+  }
+
+
+  Form buildUploadBookForm() {
+    final bool isPublicListing =
+        _selectedAction != BookUploadAction.library;
+
+    return Form(
+      key: _formKey,
+      child: Column(
+        spacing: 12,
+        children: [
+          TextFormField(
+            controller: _titleController,
+            textInputAction: TextInputAction.next,
+            decoration: const InputDecoration(
+              labelText: "Book Name",
+            ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return "Please enter the book name";
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: _authorController,
+            textInputAction: TextInputAction.next,
+            decoration: const InputDecoration(
+              labelText: "Author Name",
+            ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return "Please enter the author name";
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: _publisherController,
+            textInputAction: TextInputAction.next,
+            decoration: const InputDecoration(
+              labelText: "Publisher Name (Optional)",
+            ),
+          ),
+          TextFormField(
+            controller: _editionController,
+            textInputAction: TextInputAction.next,
+            decoration: const InputDecoration(
+              labelText: "Edition (Optional)",
+            ),
+          ),
+          if (_selectedAction == BookUploadAction.sell)
+            TextFormField(
+              controller: _priceController,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(
+                labelText: "Selling Price (৳)",
+              ),
+              validator: (value) {
+                final price = double.tryParse(
+                  value?.trim() ?? '',
+                );
+
+                if (price == null || price <= 0) {
+                  return "Please enter a valid price";
+                }
+                return null;
+              },
+            ),
+
+          if (isPublicListing)
+            DropdownButtonFormField<String>(
+              initialValue: _selectedCondition,
+              isExpanded: true,
+              decoration: const InputDecoration(
+                labelText: "Book Condition",
+              ),
+              items: const [
+                DropdownMenuItem(
+                  value: "new",
+                  child: Text("New"),
+                ),
+                DropdownMenuItem(
+                  value: "like_new",
+                  child: Text("Like New"),
+                ),
+                DropdownMenuItem(
+                  value: "good",
+                  child: Text("Good"),
+                ),
+                DropdownMenuItem(
+                  value: "fair",
+                  child: Text("Fair"),
+                ),
+                DropdownMenuItem(
+                  value: "poor",
+                  child: Text("Poor"),
+                ),
+              ],
+              onChanged: (value) {
+                _selectedCondition = value;
+              },
+              validator: (value) {
+                if (value == null) {
+                  return "Please select the book condition";
+                }
+                return null;
+              },
+            ),
+          TextFormField(
+            controller: _descriptionController,
+            maxLines: 3,
+            textInputAction: TextInputAction.done,
+            textAlignVertical: TextAlignVertical.top,
+            decoration: const InputDecoration(
+              labelText: "Description (Optional)",
+              alignLabelWithHint: true,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _authorController.dispose();
+    _publisherController.dispose();
+    _editionController.dispose();
+    _priceController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
   }
 }
 

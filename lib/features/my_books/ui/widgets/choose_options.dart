@@ -2,78 +2,113 @@ import 'package:flutter/material.dart';
 
 import '../../../../application/app_colors.dart';
 
-class ChooseOptions extends StatefulWidget {
-  const ChooseOptions({
-    super.key,
-  });
-
-  @override
-  State<ChooseOptions> createState() => _ChooseOptionsState();
+enum BookUploadAction {
+  library,
+  sell,
+  swap,
+  lend,
+  donate,
 }
 
-class _ChooseOptionsState extends State<ChooseOptions> {
+class ChooseOptions extends StatelessWidget {
+  const ChooseOptions({
+    super.key,
+    required this.selectedAction,
+    required this.onChanged,
+  });
 
-  bool? isSelected;
-  int? selectedIndex;
-  List<String> options = [
-    "Add to my Library",
-    "Sell it",
-    "Swap it",
-    "Give it away",
-    "Give it away",
-  ];
+  final BookUploadAction selectedAction;
+  final ValueChanged<BookUploadAction> onChanged;
+
+  static const Map<BookUploadAction, String> _options = {
+    BookUploadAction.sell: "Sell",
+    BookUploadAction.swap: "Swap",
+    BookUploadAction.donate: "Donate",
+    BookUploadAction.lend: "Lend",
+    BookUploadAction.library: "Add to My Library",
+  };
 
   @override
   Widget build(BuildContext context) {
+    final List<MapEntry<BookUploadAction, String>> options = _options.entries.toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "What are you willing to?",
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium!.copyWith(fontSize: 20),
+          "What would you like to do with this book?",
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(fontSize: 20),
         ),
         const SizedBox(height: 20),
-        SizedBox(
-          height: 160,
-          child: GridView.builder(
-            itemCount: 4,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 2,
-              crossAxisCount: 3,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
-            itemBuilder: (context, index) {
-              isSelected = selectedIndex == index;
-              return InkWell(
-                onTap: (){
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: isSelected! ? AppColors.themeColor : AppColors.borderColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Text(options[index],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                      color: isSelected! ? Colors.white : AppColors.themeColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ),
-                  ),
+        Column(
+          spacing: 10,
+          children: [
+            Row(
+              spacing: 10,
+              children: [
+                Expanded(
+                  child: buildOptionTile(BookUploadAction.sell),
                 ),
-              );
-            },
-          ),
+                Expanded(
+                  child: buildOptionTile(BookUploadAction.swap),
+                ),
+                Expanded(
+                  child: buildOptionTile(BookUploadAction.donate),
+                ),
+              ],
+            ),
+
+            Row(
+              spacing: 10,
+              children: [
+                Expanded(
+                  child: buildOptionTile(BookUploadAction.lend),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: buildOptionTile(BookUploadAction.library),
+                ),
+              ],
+            ),
+          ],
         ),
+        const SizedBox(height: 20),
       ],
     );
   }
+
+
+  Widget buildOptionTile(BookUploadAction action) {
+    final bool isSelected = selectedAction == action;
+
+    return SizedBox(
+      height: 55,
+      child: Material(
+        color: isSelected
+            ? AppColors.themeColor
+            : AppColors.borderColor,
+        borderRadius: BorderRadius.circular(10),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          onTap: () => onChanged(action),
+          child: Center(
+            child: Text(
+              _options[action]!,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: isSelected
+                    ? Colors.white
+                    : AppColors.themeColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

@@ -5,29 +5,30 @@ import 'package:lipika/application/assets_path.dart';
 import '../../../../application/routes/app_route_const.dart';
 
 
-class MyLibrary extends StatefulWidget {
-  const MyLibrary({super.key});
+class LibraryScreen extends StatefulWidget {
+  const LibraryScreen({super.key});
 
   @override
-  State<MyLibrary> createState() => _MyLibraryState();
+  State<LibraryScreen> createState() => _LibraryScreenState();
 }
 
-class _MyLibraryState extends State<MyLibrary> {
+class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Library"),
-        actions: [
-          ElevatedButton.icon(
-              onPressed: (){},
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2)
-              ),
-              icon: const Icon(Icons.add),
-              label: const Text("Add")),
-          const SizedBox(width: 20,),
-        ],
+        centerTitle: true,
+        // actions: [
+        //   ElevatedButton.icon(
+        //       onPressed: (){},
+        //       style: ElevatedButton.styleFrom(
+        //         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2)
+        //       ),
+        //       icon: const Icon(Icons.add),
+        //       label: const Text("Add")),
+        //   const SizedBox(width: 20,),
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),

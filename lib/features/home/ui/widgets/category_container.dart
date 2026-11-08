@@ -3,13 +3,15 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../application/app_colors.dart';
 import '../../../../application/assets_path.dart';
+import '../../../category/data/models/category_model.dart';
 
 class CategoryContainer extends StatelessWidget {
   const CategoryContainer({
     super.key,
     required this.onTapCategoryScreen,
+    required this.category,
   });
-
+  final CategoryModel category;
   final VoidCallback onTapCategoryScreen;
 
   @override
@@ -25,10 +27,10 @@ class CategoryContainer extends StatelessWidget {
         ),
         child: Column(
           spacing: 24,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: .spaceBetween,
+          crossAxisAlignment: .start,
           children: [
-            Text("Natural Science", style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            Text(category.name, style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontSize: 18,
             )),
             SvgPicture.asset(AssetsPath.natural, width: 36, height: 36,),

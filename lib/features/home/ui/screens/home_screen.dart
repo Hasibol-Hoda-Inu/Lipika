@@ -3,12 +3,17 @@ import 'package:go_router/go_router.dart';
 import 'package:lipika/application/assets_path.dart';
 import 'package:lipika/features/common/ui/widgets/book_search_anchor.dart';
 import 'package:lipika/features/home/ui/widgets/carousel_slider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../application/app_colors.dart';
 import '../../../../application/routes/app_route_const.dart';
+import '../../../category/data/models/category_model.dart';
+import '../../../category/ui/controllers/category_controller.dart';
 import '../../../category/ui/screens/categories_screen.dart';
+import '../../../common/ui/widgets/app_snackbar.dart';
 import '../widgets/book_container.dart';
 import '../widgets/category_container.dart';
+import '../widgets/category_shimmer.dart';
 import '../widgets/section_title.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +24,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _loadCategories();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,20 +70,46 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 12),
             SizedBox(
               height: 140,
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                scrollDirection: Axis.horizontal,
-                itemCount: 6,
-                itemBuilder: (context, index) {
-                  return CategoryContainer(
-                    onTapCategoryScreen: _onTapCategoryScreen,
+              child: Consumer<CategoryController>(
+                builder: (
+                    BuildContext context,
+                    CategoryController controller,
+                    Widget? child,
+                    ) {
+                  if (controller.isLoading) {
+                    return const CategoryShimmer();
+                  }
+
+                  if (controller.error != null && controller.categories.isEmpty) {
+                    return Center(child: Text(controller.error!),);
+                  }
+
+                  final List<CategoryModel> categories = controller.categories;
+
+                  if (categories.isEmpty) {
+                    return const Center(child: Text("No categories available"),);
+                  }
+
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                      final CategoryModel category = categories[index];
+
+                      return CategoryContainer(
+                        category: category,
+                        onTapCategoryScreen: _onTapCategoryScreen,
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(width: 12);
+                    },
                   );
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(width: 12);
                 },
               ),
             ),
+
             const SizedBox(height: 30),
             SectionTitle(title: "Purchasable Books", onTap: _onTapCategoryScreen,),
             const SizedBox(height: 12),
@@ -125,6 +167,22 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _loadCategories() async {
+    final CategoryController controller = context.read<CategoryController>();
+
+    final bool isSuccess = await controller.loadCategories();
+
+    if (!mounted) return;
+
+    if (!isSuccess && controller.error != null) {
+      AppSnackBar.show(
+        context,
+        message: controller.error!,
+        type: SnackBarType.error,
+      );
+    }
   }
 
   void _onTapCategoryScreen() {
