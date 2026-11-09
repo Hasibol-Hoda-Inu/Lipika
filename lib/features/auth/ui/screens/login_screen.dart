@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lipika/application/assets_path.dart';
 import 'package:lipika/application/routes/app_route_const.dart';
-import 'package:lipika/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:lipika/features/auth/ui/utils/regex_validators.dart';
 import 'package:lipika/features/auth/ui/widgets/social_auth_buttons.dart';
 import 'package:provider/provider.dart';

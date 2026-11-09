@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../application/app_colors.dart';
-
-enum BookUploadAction {
-  library,
-  sell,
-  swap,
-  lend,
-  donate,
-}
+import '../../data/models/book_upload_action.dart';
 
 class ChooseOptions extends StatelessWidget {
   const ChooseOptions({
@@ -30,8 +23,6 @@ class ChooseOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<MapEntry<BookUploadAction, String>> options = _options.entries.toList();
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -60,7 +51,6 @@ class ChooseOptions extends StatelessWidget {
                 ),
               ],
             ),
-
             Row(
               spacing: 10,
               children: [
@@ -83,7 +73,6 @@ class ChooseOptions extends StatelessWidget {
 
   Widget buildOptionTile(BookUploadAction action) {
     final bool isSelected = selectedAction == action;
-
     return SizedBox(
       height: 55,
       child: Material(

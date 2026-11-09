@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../application/app_colors.dart';
 import '../../../category/data/models/category_model.dart';
 import '../../../category/ui/controllers/category_controller.dart';
 import '../../../common/ui/widgets/app_snackbar.dart';
+import '../../data/models/book_upload_action.dart';
 import '../widgets/choose_options.dart';
 
 class UploadBookScreen extends StatefulWidget {
@@ -26,6 +30,9 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
   String? _selectedCondition;
   String? _selectedCategoryId;
 
+  final ImagePicker _imagePicker = ImagePicker();
+  final List<XFile> _selectedPhotos = <XFile>[];
+
   BookUploadAction _selectedAction = BookUploadAction.library;
 
   @override
@@ -43,6 +50,7 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
             children: [
               const SizedBox(height: 12,),
               buildUploadBookForm(),
+              buildBookPhotoPicker(),
               const SizedBox(height: 20,),
               ChooseOptions(
                 selectedAction: _selectedAction,
@@ -69,9 +77,7 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
 
 
   Form buildUploadBookForm() {
-    final bool isPublicListing =
-        _selectedAction != BookUploadAction.library;
-
+    final bool isPublicListing = _selectedAction != BookUploadAction.library;
     return Form(
       key: _formKey,
       child: Column(
@@ -145,7 +151,6 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
                   return null;
                 },
               );
-
             },
           ),
 
@@ -240,13 +245,183 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
   }
 
   void _uplaodBook(){
-    final bool isValid =
-        _formKey.currentState?.validate() ?? false;
-
+    final bool isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) return;
-
     debugPrint("Selected Category ID: $_selectedCategoryId");
   }
+
+  Widget buildBookPhotoPicker() {
+    return Column(
+      crossAxisAlignment: .start,
+      spacing: 12,
+      children: [
+        Text(
+          "Book Photos",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Text(
+          "Add a photo of your book. More photos are optional.",
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            OutlinedButton(
+              onPressed: _pickBookPhotos,
+              style: OutlinedButton.styleFrom(
+                fixedSize: const Size(108, 108),
+                padding: EdgeInsets.zero,
+                side: const BorderSide(
+                  color: AppColors.borderColor,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 8,
+                children: [
+                  Icon(Icons.add_a_photo_outlined, size: 28),
+                  Text("Add Photo"),
+                ],
+              ),
+            ),
+
+            for (final (int index, XFile photo)
+            in _selectedPhotos.indexed)
+              SizedBox(
+                width: 108,
+                height: 108,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.file(
+                        File(photo.path),
+                        width: 108,
+                        height: 108,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+
+                    Positioned(
+                      top: -6,
+                      right: -6,
+                      child: IconButton.filledTonal(
+                        constraints: const BoxConstraints.tightFor(
+                          width: 28,
+                          height: 28,
+                        ),
+                        padding: EdgeInsets.zero,
+                        icon: const Icon(Icons.close, size: 16),
+                        onPressed: () {
+                          setState(() {
+                            _selectedPhotos.removeAt(index);
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Future<void> _pickBookPhotos() async {
+    final ImageSource? source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      builder: (sheetContext) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt_outlined),
+                title: const Text("Take a photo"),
+                onTap: () => Navigator.pop(
+                  sheetContext,
+                  ImageSource.camera,
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library_outlined),
+                title: const Text("Choose from gallery"),
+                onTap: () => Navigator.pop(
+                  sheetContext,
+                  ImageSource.gallery,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (!mounted || source == null) return;
+
+    try {
+      List<XFile> photos = <XFile>[];
+
+      if (source == ImageSource.camera) {
+        final XFile? photo = await _imagePicker.pickImage(
+          source: ImageSource.camera,
+          imageQuality: 85,
+        );
+
+        if (photo != null) {
+          photos = <XFile>[photo];
+        }
+      } else {
+        photos = await _imagePicker.pickMultiImage(imageQuality: 85);
+      }
+
+      if (!mounted || photos.isEmpty) return;
+      final List<XFile> validPhotos = <XFile>[];
+
+      for (final XFile photo in photos) {
+        final int size = await photo.length();
+
+        if (size <= 5 * 1024 * 1024) {
+          validPhotos.add(photo);
+        }
+      }
+
+      if (!mounted) return;
+
+      setState(() {
+        for (final XFile photo in validPhotos) {
+          if (!_selectedPhotos.any(
+                  (XFile existing) => existing.path == photo.path)
+          ) {
+            _selectedPhotos.add(photo);
+          }
+        }
+      });
+
+      if (validPhotos.length != photos.length) {
+        AppSnackBar.show(
+          context,
+          message: "Some images exceed the 5 MB limit.",
+          type: SnackBarType.error,
+        );
+      }
+
+    } catch (error) {
+    if (!mounted) return;
+    AppSnackBar.show(
+    context,
+    message: "Unable to select photos. Please try again.",
+    type: SnackBarType.error,
+    );
+    debugPrint("🔴 Image picker error: $error");
+    }
+  }
+
 
   @override
   void dispose() {

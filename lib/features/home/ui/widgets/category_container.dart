@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../application/app_colors.dart';
-import '../../../../application/assets_path.dart';
 import '../../../category/data/models/category_model.dart';
 
 class CategoryContainer extends StatelessWidget {
