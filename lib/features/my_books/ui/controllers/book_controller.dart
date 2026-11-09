@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../data/models/book_upload_model.dart';
 import '../../data/services/book_service.dart';
@@ -13,22 +14,44 @@ class BookController extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  Future<bool> uploadBook(BookUploadModel book) async {
+
+  Future<bool> uploadBook(BookUploadModel book, {required List<XFile> photos}) async {
     if (_isLoading) return false;
+
+    if (book.action.isPublicListing && photos.isEmpty) {
+      _error = "Please add at least one book photo.";
+      notifyListeners();
+      return false;
+    }
 
     _isLoading = true;
     _error = null;
     notifyListeners();
 
+    String? createdUserBookId;
+
     try {
-      await _bookService.createBook(book);
+      createdUserBookId = await _bookService.createBook(book);
+
+      if (photos.isNotEmpty) {
+        await _bookService.uploadBookPhotos(
+          userBookId: createdUserBookId,
+          photos: photos,
+        );
+      }
 
       debugPrint("✅ Book uploaded successfully");
       return true;
 
-    } catch (e) {
+    } catch (error) {
+    if (createdUserBookId != null) {
+    _error = "Book saved, but photo upload failed.";
+
+    } else {
     _error = "Unable to upload book. Please try again.";
-    debugPrint("🔴 Book upload error: $e");
+    }
+
+    debugPrint("🔴 Book upload error: $error");
     return false;
 
     } finally {
@@ -36,4 +59,5 @@ class BookController extends ChangeNotifier {
     notifyListeners();
     }
   }
+
 }

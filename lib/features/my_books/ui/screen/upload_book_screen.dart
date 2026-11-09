@@ -9,6 +9,8 @@ import '../../../category/data/models/category_model.dart';
 import '../../../category/ui/controllers/category_controller.dart';
 import '../../../common/ui/widgets/app_snackbar.dart';
 import '../../data/models/book_upload_action.dart';
+import '../../data/models/book_upload_model.dart';
+import '../controllers/book_controller.dart';
 import '../widgets/choose_options.dart';
 
 class UploadBookScreen extends StatefulWidget {
@@ -60,13 +62,27 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
                   });
                 },
               ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _uplaodBook,
-                  child: const Text("Continue"),
-                ),
+              Consumer<BookController>(
+                builder: (context, controller, child) {
+                  return SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: controller.isLoading ? null : _uploadBook,
+                      child: controller.isLoading
+                          ? const SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                          : const Text("Continue"),
+                    ),
+                  );
+                },
               ),
+
               const SizedBox(height: 10),
             ],
           ),
@@ -244,10 +260,49 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
     );
   }
 
-  void _uplaodBook(){
+  Future<void> _uploadBook() async {
     final bool isValid = _formKey.currentState?.validate() ?? false;
+
     if (!isValid) return;
-    debugPrint("Selected Category ID: $_selectedCategoryId");
+    await _submitBook();
+  }
+
+  Future<void> _submitBook() async {
+    final BookController controller = context.read<BookController>();
+
+    final BookUploadModel book = BookUploadModel(
+      title: _titleController.text.trim(),
+      author: _authorController.text.trim(),
+      categoryId: _selectedCategoryId!,
+      publisher: _publisherController.text.trim(),
+      edition: _editionController.text.trim(),
+      description: _descriptionController.text.trim(),
+      action: _selectedAction,
+      condition: _selectedAction.isPublicListing
+          ? _selectedCondition
+          : null,
+      price: _selectedAction.requiresPrice
+          ? double.tryParse(_priceController.text.trim())
+          : null,
+    );
+
+    final bool isSuccess = await controller.uploadBook(book, photos: _selectedPhotos);
+
+    if (!mounted) return;
+
+    if (isSuccess) {
+      AppSnackBar.show(
+        context,
+        message: "Book saved successfully!",
+        type: SnackBarType.success,
+      );
+    } else {
+      AppSnackBar.show(
+        context,
+        message: controller.error ?? "Unable to save book.",
+        type: SnackBarType.error,
+      );
+    }
   }
 
   Widget buildBookPhotoPicker() {
