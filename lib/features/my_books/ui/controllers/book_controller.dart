@@ -45,10 +45,10 @@ class BookController extends ChangeNotifier {
 
     } catch (error) {
     if (createdUserBookId != null) {
-    _error = "Book saved, but photo upload failed.";
+    _error = "🟡 Book saved, but photo upload failed.";
 
     } else {
-    _error = "Unable to upload book. Please try again.";
+    _error = "🔴 Unable to upload book. Please try again.";
     }
 
     debugPrint("🔴 Book upload error: $error");

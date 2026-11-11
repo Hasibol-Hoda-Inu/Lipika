@@ -265,6 +265,7 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
 
     if (!isValid) return;
     await _submitBook();
+
   }
 
   Future<void> _submitBook() async {
@@ -291,6 +292,7 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
     if (!mounted) return;
 
     if (isSuccess) {
+      _resetUploadForm();
       AppSnackBar.show(
         context,
         message: "Book saved successfully!",
@@ -477,6 +479,26 @@ class _UploadBookScreenState extends State<UploadBookScreen> {
     }
   }
 
+  void _resetUploadForm() {
+    _formKey.currentState?.reset();
+
+    _titleController.clear();
+    _authorController.clear();
+    _publisherController.clear();
+    _editionController.clear();
+    _priceController.clear();
+    _descriptionController.clear();
+
+    _selectedCategoryId = null;
+    _selectedCondition = null;
+
+    setState(() {
+      _selectedAction = BookUploadAction.library;
+      _selectedPhotos.clear();
+    });
+
+    FocusScope.of(context).unfocus();
+  }
 
   @override
   void dispose() {
